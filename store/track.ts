@@ -1,0 +1,39 @@
+import { defineStore } from 'pinia'
+import { useAuthStore } from './auth'
+import types from './types'
+
+export const useTrackStore = defineStore('track', () => {
+  const authStore = useAuthStore()
+
+  const baseUrl = useRuntimeConfig().public.API_BASE_URL
+
+  // Upload the tracks
+  async function uploadTracks (tracks: string[]): Promise<void> {
+    const userId = authStore.user.id
+    await $fetch(`${baseUrl}/track/upload`, {
+      method: 'POST',
+      body: {
+        userId: userId,
+        tracks,
+      },
+      credentials: 'include',
+    })
+  }
+
+  // Load actual tracks
+  async function loadTracks (): Promise<types.Track[] | unknown> {
+    const tracks: types.Track[] | unknown = await $fetch(`${baseUrl}/track/all/${authStore.user.id}`, {
+      method: 'GET',
+      credentials: 'include',
+    }).catch(async () => {
+      await authStore.redirectLogin()
+    })
+
+    return tracks
+  }
+
+  return {
+    uploadTracks,
+    loadTracks
+  }
+})
