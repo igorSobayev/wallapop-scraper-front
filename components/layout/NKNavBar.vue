@@ -1,5 +1,5 @@
 <template>
-    <header class="bg-white z-50 fixed w-screen">
+    <header class="bg-white z-50 fixed w-screen border-b">
         <nav class="flex justify-between items-center w-[92%] mx-auto">
             <div>
                 <img class="w-64 cursor-pointer" src="./../../assets/logo.png" alt="...">
