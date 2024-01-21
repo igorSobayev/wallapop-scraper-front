@@ -49,57 +49,12 @@ export const useUserStore = defineStore('user', () => {
     return user
   }
 
-  async function loadUserRecipes (): Promise<types.Recipe[] | unknown> {
-    const userRecipes: types.Recipe[] | unknown = await $fetch(`${baseUrl}/user/all-recipes/${authStore.user.id}`, {
-      method: 'GET',
-      credentials: 'include',
-    })
-
-    return userRecipes
-  }
-
-  async function loadUserWipRecipes (): Promise<types.Recipe[] | unknown> {
-    const userRecipes: types.Recipe[] | unknown = await $fetch(`${baseUrl}/user/wip-recipes/${authStore.user.id}`, {
-      method: 'GET',
-      credentials: 'include',
-    })
-
-    return userRecipes
-  }
-
-  async function loadUserPublishedRecipes (): Promise<types.Recipe[] | unknown> {
-    const userPublishedRecipes: types.Recipe[] | unknown = await $fetch(`${baseUrl}/user/published-recipes/${authStore.user.id}`, {
-      method: 'GET',
-      credentials: 'include',
-    })
-
-    return userPublishedRecipes
-  }
-
   async function  edit (userData: types.EditUserParams) {
-    let avatarUpdated
-
-    if (userData.newAvatar) {
-      avatarUpdated = await uploadAvatarImg(userData.newAvatar, userData.id)
-
-      userData.avatar = avatarUpdated.uploadedImage.Location
-    }
-
     await $fetch(`${baseUrl}/user/edit/${userData.id}`, {
       method: 'PUT',
       body: userData,
       credentials: 'include',
     })
-  }
-
-  async function uploadAvatarImg (userImg: FormData, userId: string): Promise<types.ImgObject> {
-    const newImg = await $fetch(`${baseUrl}/user/upload-file/${userId}`, {
-      method: 'POST',
-      body: userImg,
-      credentials: 'include',
-    }) as types.ImgObject
-
-    return newImg
   }
 
   async function deleteFiles (filesRoutes: string[]): Promise<void> {
@@ -164,9 +119,6 @@ export const useUserStore = defineStore('user', () => {
     loadPublicUserData,
     edit,
     deleteFiles,
-    loadUserRecipes,
-    loadUserPublishedRecipes,
-    loadUserWipRecipes,
     loadPublicUserRecipes,
     followUser,
     unfollowUser,
