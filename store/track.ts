@@ -10,7 +10,7 @@ export const useTrackStore = defineStore('track', () => {
   // Upload the tracks
   async function uploadTracks (tracks: string[]): Promise<void> {
     const userId = authStore.user.id
-    
+
     await $fetch(`${baseUrl}/track/upload`, {
       method: 'POST',
       body: {
@@ -35,8 +35,22 @@ export const useTrackStore = defineStore('track', () => {
     return tracks
   }
 
+  // Update tracks info
+  async function updateTracksInfo (): Promise<void> {
+    const userId = authStore.user.id
+
+    await $fetch(`${baseUrl}/track/update-user-tracks-info`, {
+      method: 'POST',
+      body: {
+        userId: userId,
+      },
+      credentials: 'include',
+    })
+  }
+
   return {
     uploadTracks,
-    loadTracks
+    loadTracks,
+    updateTracksInfo,
   }
 })

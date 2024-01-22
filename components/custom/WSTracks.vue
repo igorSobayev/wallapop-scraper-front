@@ -5,6 +5,7 @@ const route = useRoute()
 
 const trackStore = useTrackStore()
 
+const loadingTracks = ref(false)
 const tracks = ref([])
 
 const columns = [
@@ -69,46 +70,62 @@ function formatDate(time) {
     return `${hour}:${minutes} ${day}/${month}`;
 }
 
-onNuxtReady(async () => {
-    tracks.value = await trackStore.loadTracks()
+const updateTracksInfo = async () => {
+    loadingTracks.value = true
+    await trackStore.updateTracksInfo()
+    await loadTracksInfo()
+    loadingTracks.value = false
+}
 
-    console.log(tracks.value)
+const loadTracksInfo = async () => {
+    loadingTracks.value = true
+    tracks.value = await trackStore.loadTracks()
+    loadingTracks.value = false
+}
+
+onNuxtReady(async () => {
+    await loadTracksInfo()
 })
 </script>
 
 <template>
-    <div class="border">
-        <UTable :columns="columns" :rows="tracks">
+    <div>
+        <div class="mb-2">
+            <UButton color="primary" size="md" @click="updateTracksInfo" variant="solid">Update tracks info</UButton>
+        </div>
+        <div class="border">
+            <UTable :columns="columns" :rows="tracks" :loading="loadingTracks">
 
-            <template #tag-data="{ row }">
-                <span class="text-stone-950"> {{ row.tag }} </span>
-            </template>
+                <template #tag-data="{ row }">
+                    <span class="text-stone-950"> {{ row.tag }} </span>
+                </template>
 
-            <template #title-data="{ row }">
-                <a class="text-gray-600" :href="row.link"> {{ row.title }} </a>
-            </template>
+                <template #title-data="{ row }">
+                    <a class="text-gray-600" :href="row.link"> {{ row.title }} </a>
+                </template>
 
-            <template #views-data="{ row }">
-                <span class="text-stone-950"> {{ row.views }} </span>
-            </template>
+                <template #views-data="{ row }">
+                    <span class="text-stone-950"> {{ row.views }} </span>
+                </template>
 
-            <template #favs-data="{ row }">
-                <span class="text-stone-950"> {{ row.favs }} </span>
-            </template>
+                <template #favs-data="{ row }">
+                    <span class="text-stone-950"> {{ row.favs }} </span>
+                </template>
 
-            <template #price-data="{ row }">
-                <span class="text-stone-950"> {{ row.price }} € </span>
-            </template>
+                <template #price-data="{ row }">
+                    <span class="text-stone-950"> {{ row.price }} € </span>
+                </template>
 
-            <template #updateDate-data="{ row }">
-                <span class="text-stone-950"> {{ formatDate(row.updateDate) }} </span>
-            </template>
+                <template #updateDate-data="{ row }">
+                    <span class="text-stone-950"> {{ formatDate(row.updateDate) }} </span>
+                </template>
 
-            <template #actions-data="{ row }">
-                <UDropdown :items="items(row)">
-                    <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
-                </UDropdown>
-            </template>
-        </UTable>
+                <template #actions-data="{ row }">
+                    <UDropdown :items="items(row)">
+                        <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
+                    </UDropdown>
+                </template>
+            </UTable>
+        </div>
     </div>
 </template>
