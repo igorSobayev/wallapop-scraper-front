@@ -48,9 +48,26 @@ export const useTrackStore = defineStore('track', () => {
     })
   }
 
+  // Update tracks info
+  async function deleteTrack (trackId: string): Promise<void> {
+    const userId = authStore.user.id
+
+    console.log(trackId)
+    if (!trackId) return
+
+    await $fetch(`${baseUrl}/track/delete/${trackId}`, {
+      method: 'DELETE',
+      body: {
+        userId: userId,
+      },
+      credentials: 'include',
+    })
+  }
+
   return {
     uploadTracks,
     loadTracks,
     updateTracksInfo,
+    deleteTrack,
   }
 })
