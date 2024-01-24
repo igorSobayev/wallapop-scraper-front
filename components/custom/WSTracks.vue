@@ -38,6 +38,22 @@ const columns = [
     }
 ]
 
+const archiveTrack = async (trackId) => {
+    loadingTracks.value = true
+
+    await trackStore.archiveTrack(trackId)
+
+    await loadTracksInfo()
+}
+
+const deleteTrack = async (trackId) => {
+    loadingTracks.value = true
+    
+    await trackStore.deleteTrack(trackId)
+
+    await loadTracksInfo()
+}
+
 const items = (row) => [
     [
         {
@@ -50,10 +66,11 @@ const items = (row) => [
         {
             label: 'Archive',
             icon: 'i-heroicons-archive-box-20-solid',
+            click: () => archiveTrack(row._id)
         }, {
             label: 'Delete',
             icon: 'i-heroicons-trash-20-solid',
-            click: () => trackStore.deleteTrack(row._id)
+            click: () => deleteTrack(row._id)
         }
     ]
 ]
