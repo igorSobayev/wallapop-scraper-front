@@ -52,11 +52,24 @@ export const useTrackStore = defineStore('track', () => {
   async function deleteTrack (trackId: string): Promise<void> {
     const userId = authStore.user.id
 
-    console.log(trackId)
     if (!trackId) return
 
     await $fetch(`${baseUrl}/track/delete/${trackId}`, {
       method: 'DELETE',
+      body: {
+        userId: userId,
+      },
+      credentials: 'include',
+    })
+  }
+
+  async function archiveTrack (trackId: string): Promise<void> {
+    const userId = authStore.user.id
+
+    if (!trackId) return
+
+    await $fetch(`${baseUrl}/track/archive/${trackId}`, {
+      method: 'PUT',
       body: {
         userId: userId,
       },
@@ -69,5 +82,6 @@ export const useTrackStore = defineStore('track', () => {
     loadTracks,
     updateTracksInfo,
     deleteTrack,
+    archiveTrack,
   }
 })
