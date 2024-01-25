@@ -5,6 +5,8 @@ const route = useRoute()
 
 const trackStore = useTrackStore()
 
+const emit = defineEmits(['trackUploaded'])
+
 const newTracks = ref([])
 const newTracksRaw = ref()
 const wrongTracks = ref([])
@@ -36,6 +38,8 @@ const addNewTracks = async () => {
     tracksInputLoading.value = true
 
     await trackStore.uploadTracks(newTracks.value)
+
+    emit('trackUploaded')
 
     resetTracksInput()
     console.log('TODO GUCCI CABESA')
