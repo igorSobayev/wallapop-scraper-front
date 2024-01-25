@@ -103,6 +103,10 @@ const loadTracksInfo = async () => {
 onNuxtReady(async () => {
     await loadTracksInfo()
 })
+
+defineExpose({
+    loadTracksInfo,
+  })
 </script>
 
 <template>
