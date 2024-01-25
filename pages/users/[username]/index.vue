@@ -4,6 +4,8 @@ import WSTracks from '~/components/custom/WSTracks.vue'
 
 const route = useRoute()
 
+const tracksComp = ref(null)
+
 useHead({
   title: route.params.username + '  page',
   meta: [
@@ -14,6 +16,10 @@ useHead({
   ],
 })
 
+const trackUploaded = () => {
+  tracksComp.value.loadTracksInfo()
+}
+
 onNuxtReady(async () => {
 
 })
@@ -23,11 +29,11 @@ onNuxtReady(async () => {
   <div class="flex justify-center flex-col gap-2 pt-5">
     <!-- Add new track -->
     <div class="mb-4">
-      <WSNewTrack />
+      <WSNewTrack @track-uploaded="trackUploaded" />
     </div>
     <!-- Track table -->
     <div class="mt-4">
-      <WSTracks />
+      <WSTracks ref="tracksComp" />
     </div>
   </div>
 </template>
