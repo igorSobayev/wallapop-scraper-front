@@ -34,6 +34,9 @@ const columns = [
         label: 'Fecha sync'
     },
     {
+        key: 'state'
+    },
+    {
         key: 'actions'
     }
 ]
@@ -96,7 +99,22 @@ const updateTracksInfo = async () => {
 
 const loadTracksInfo = async () => {
     loadingTracks.value = true
-    tracks.value = await trackStore.loadTracks()
+    const rawTracks = await trackStore.loadTracks()
+    tracks.value = rawTracks.map(track => {
+        let styleClass = ''
+
+        if (track.reserved) {
+            styleClass = 'bg-yellow-100'
+        }
+
+        if (track.sold) {
+            styleClass = 'bg-red-50'
+        }
+
+        track.class = styleClass
+
+        return track
+    })
     loadingTracks.value = false
 }
 
@@ -139,6 +157,11 @@ defineExpose({
 
                 <template #updateDate-data="{ row }">
                     <span class="text-stone-950"> {{ formatDate(row.updateDate) }} </span>
+                </template>
+
+                <template #state-data="{ row }">
+                    <UBadge color="primary" v-if="row.sold" size="sm" class="mr-1" variant="solid">Vendido</UBadge>
+                    <UBadge color="gray" v-if="row.reserved" size="sm" variant="solid">Reservado</UBadge>
                 </template>
 
                 <template #actions-data="{ row }">
