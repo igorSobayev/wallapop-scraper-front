@@ -122,6 +122,8 @@ const loadTracksInfo = async () => {
 
         track.favsUpdate = getTrackFavsUpdate(track)
 
+        track.priceUpdate = getPriceUpdate(track)
+
         return track
     })
     loadingTracks.value = false
@@ -177,6 +179,18 @@ const getTrackFavsUpdate = (track) => {
 
 const getPriceUpdate = (track) => {
     // TODO
+    let priceUpdate = 0
+
+    const actualPrice = track.price
+    const trackToCompare = track.lastElement
+
+    if (!trackToCompare) {
+        return priceUpdate
+    }
+
+    priceUpdate = actualPrice - trackToCompare.price
+
+    return priceUpdate
 }
 
 onNuxtReady(async () => {
@@ -226,7 +240,15 @@ defineExpose({
                 </template>
 
                 <template #price-data="{ row }">
-                    <span class="text-stone-950"> {{ row.price }} € </span>
+                    <div class="text-stone-950"> 
+                        {{ row.price }} € 
+                        <span v-if="row.priceUpdate < 0" class="ml-2 text-green-600">
+                            ({{ Math.abs(row.priceUpdate) }} € <UIcon name="i-heroicons-arrow-trending-down" /> )
+                        </span>
+                        <span v-if="row.priceUpdate > 0" class="ml-2 text-red-500">
+                            ({{ Math.abs(row.priceUpdate) }} € <UIcon name="i-heroicons-arrow-trending-up" /> )
+                        </span>
+                    </div>
                 </template>
 
                 <template #updateDate-data="{ row }">
