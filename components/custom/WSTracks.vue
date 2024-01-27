@@ -61,9 +61,12 @@ const deleteTrack = async (trackId) => {
 const syncTrack = async (trackId) => {
     loadingTracks.value = true
 
-    await trackStore.syncTrack(trackId)
-
-    await loadTracksInfo()
+    try {
+        await trackStore.syncTrack(trackId)
+        await loadTracksInfo()
+    } catch (e) {
+        loadingTracks.value = false
+    }
 }
 
 const items = (row) => [
@@ -71,6 +74,7 @@ const items = (row) => [
         {
             label: 'Sync info',
             icon: 'i-heroicons-pencil-square-20-solid',
+            disabled: row.deletedFromPlatform,
             click: () => syncTrack(row._id)
         }
     ],
@@ -78,6 +82,7 @@ const items = (row) => [
         {
             label: 'Archive',
             icon: 'i-heroicons-archive-box-20-solid',
+            disabled: row.deletedFromPlatform,
             click: () => archiveTrack(row._id)
         }, {
             label: 'Delete',

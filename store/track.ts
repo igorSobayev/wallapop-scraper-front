@@ -88,6 +88,8 @@ export const useTrackStore = defineStore('track', () => {
         userId: userId,
       },
       credentials: 'include',
+    }).catch(e => {
+      throw e
     })
   }
 
