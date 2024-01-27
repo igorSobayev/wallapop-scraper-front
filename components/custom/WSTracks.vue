@@ -115,25 +115,68 @@ const loadTracksInfo = async () => {
     loadingTracks.value = true
     const rawTracks = await trackStore.loadTracks()
     tracks.value = rawTracks.map(track => {
-        let styleClass = ''
 
-        if (track.reserved) {
-            styleClass = 'bg-yellow-100'
-        }
+        track.class = getTrackStyle(track)
 
-        if (track.sold) {
-            styleClass = 'bg-red-50'
-        }
+        track.viewsUpdate = getTrackViewsUpdate(track)
 
-        if (track.deletedFromPlatform) {
-            styleClass = 'bg-red-200'
-        }
-
-        track.class = styleClass
+        track.favsUpdate = getTrackFavsUpdate(track)
 
         return track
     })
     loadingTracks.value = false
+}
+
+const getTrackStyle = (track) => {
+    let styleClass = ''
+
+    if (track.reserved) {
+        styleClass = 'bg-yellow-100'
+    }
+
+    if (track.sold) {
+        styleClass = 'bg-red-50'
+    }
+
+    if (track.deletedFromPlatform) {
+        styleClass = 'bg-red-200'
+    }
+
+    return styleClass
+}
+
+const getTrackViewsUpdate = (track) => {
+    let viewsUpdate = 0
+
+    const views = track.views
+    const trackToCompare = track.lastElement
+
+    if (!trackToCompare) {
+        return viewsUpdate
+    }
+
+    viewsUpdate = views - trackToCompare.views
+
+    return viewsUpdate
+}
+
+const getTrackFavsUpdate = (track) => {
+    let favsUpdate = 0
+
+    const favs = track.favs
+    const trackToCompare = track.lastElement
+
+    if (!trackToCompare) {
+        return favsUpdate
+    }
+
+    favsUpdate = favs - trackToCompare.favs
+
+    return favsUpdate
+}
+
+const getPriceUpdate = (track) => {
+    // TODO
 }
 
 onNuxtReady(async () => {
@@ -158,15 +201,28 @@ defineExpose({
                 </template>
 
                 <template #title-data="{ row }">
-                    <a class="text-gray-600" :href="row.link"> {{ row.title }} </a>
+                    <a class="text-gray-600" target="_blank" :href="row.link"> {{ row.title }} </a>
                 </template>
 
                 <template #views-data="{ row }">
-                    <span class="text-stone-950"> {{ row.views }} </span>
+                    <div class="text-stone-950"> 
+                        {{ row.views }} 
+                        <span v-if="row.viewsUpdate" class="ml-2 text-green-600">
+                            ({{ row.viewsUpdate }} <UIcon name="i-heroicons-arrow-trending-up" /> )
+                        </span>
+                 </div>
                 </template>
 
                 <template #favs-data="{ row }">
-                    <span class="text-stone-950"> {{ row.favs }} </span>
+                    <div class="text-stone-950"> 
+                        {{ row.favs }} 
+                        <span v-if="row.favsUpdate > 0" class="ml-2 text-green-600">
+                            ({{ row.favsUpdate }} <UIcon name="i-heroicons-arrow-trending-up" /> )
+                        </span>
+                        <span v-if="row.favsUpdate < 0" class="ml-2 text-red-500">
+                            ({{ row.favsUpdate }} <UIcon name="i-heroicons-arrow-trending-down" /> )
+                        </span>
+                    </div>
                 </template>
 
                 <template #price-data="{ row }">
