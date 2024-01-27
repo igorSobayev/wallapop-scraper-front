@@ -120,6 +120,10 @@ const loadTracksInfo = async () => {
             styleClass = 'bg-red-50'
         }
 
+        if (track.deletedFromPlatform) {
+            styleClass = 'bg-red-200'
+        }
+
         track.class = styleClass
 
         return track
@@ -169,9 +173,10 @@ defineExpose({
                 </template>
 
                 <template #state-data="{ row }">
-                    <UBadge color="primary" v-if="!row.sold && !row.reserved" size="sm" class="mr-1" variant="solid">Disponible</UBadge>
+                    <UBadge color="primary" v-if="!row.sold && !row.reserved && !row.deletedFromPlatform" size="sm" class="mr-1" variant="solid">Disponible</UBadge>
                     <UBadge color="white" v-if="row.sold" size="sm" class="mr-1" variant="solid">Vendido</UBadge>
                     <UBadge color="gray" v-if="row.reserved" size="sm" variant="solid">Reservado</UBadge>
+                    <UBadge color="red" v-if="row.deletedFromPlatform" size="sm" variant="solid">Eliminado</UBadge>
                 </template>
 
                 <template #actions-data="{ row }">
