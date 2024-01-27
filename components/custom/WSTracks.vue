@@ -34,7 +34,8 @@ const columns = [
         label: 'Fecha sync'
     },
     {
-        key: 'state'
+        key: 'state',
+        label: 'Estado'
     },
     {
         key: 'actions'
@@ -57,12 +58,20 @@ const deleteTrack = async (trackId) => {
     await loadTracksInfo()
 }
 
+const syncTrack = async (trackId) => {
+    loadingTracks.value = true
+
+    await trackStore.syncTrack(trackId)
+
+    await loadTracksInfo()
+}
+
 const items = (row) => [
     [
         {
             label: 'Sync info',
             icon: 'i-heroicons-pencil-square-20-solid',
-            click: () => console.log('Sync data') // TODO
+            click: () => syncTrack(row._id)
         }
     ],
     [
@@ -160,7 +169,8 @@ defineExpose({
                 </template>
 
                 <template #state-data="{ row }">
-                    <UBadge color="primary" v-if="row.sold" size="sm" class="mr-1" variant="solid">Vendido</UBadge>
+                    <UBadge color="primary" v-if="!row.sold && !row.reserved" size="sm" class="mr-1" variant="solid">Disponible</UBadge>
+                    <UBadge color="white" v-if="row.sold" size="sm" class="mr-1" variant="solid">Vendido</UBadge>
                     <UBadge color="gray" v-if="row.reserved" size="sm" variant="solid">Reservado</UBadge>
                 </template>
 

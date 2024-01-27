@@ -77,11 +77,26 @@ export const useTrackStore = defineStore('track', () => {
     })
   }
 
+  async function syncTrack (trackId: string): Promise<void> {
+    const userId = authStore.user.id
+
+    if (!trackId) return
+
+    await $fetch(`${baseUrl}/track/sync-track/${trackId}`, {
+      method: 'PUT',
+      body: {
+        userId: userId,
+      },
+      credentials: 'include',
+    })
+  }
+
   return {
     uploadTracks,
     loadTracks,
     updateTracksInfo,
     deleteTrack,
     archiveTrack,
+    syncTrack,
   }
 })
