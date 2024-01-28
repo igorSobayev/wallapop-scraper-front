@@ -14,6 +14,9 @@ const columns = [
         label: 'ID'
     },
     {
+        key: 'previewImg',
+    },
+    {
         key: 'title',
         label: 'Título'
     },
@@ -212,6 +215,10 @@ defineExpose({
 
                 <template #tag-data="{ row }">
                     <span class="text-stone-950"> {{ row.tag }} </span>
+                </template>
+
+                <template #previewImg-data="{ row }">
+                    <img :src="row.previewImg" width="25" />
                 </template>
 
                 <template #title-data="{ row }">
