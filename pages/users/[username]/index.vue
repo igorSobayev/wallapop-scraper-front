@@ -1,6 +1,7 @@
 <script setup>
 import WSNewTrack from '~/components/custom/WSNewTrack.vue'
 import WSTracks from '~/components/custom/WSTracks.vue'
+import WSUpdateTracksConfig from '~/components/custom/WSUpdateTracksConfig.vue'
 
 const route = useRoute()
 
@@ -31,6 +32,11 @@ onNuxtReady(async () => {
     <div class="mb-4">
       <WSNewTrack @track-uploaded="trackUploaded" />
     </div>
+    <hr class="my-4">
+    <div class="my-4">
+      <WSUpdateTracksConfig />
+    </div>
+    <hr class="my-4">
     <!-- Track table -->
     <div class="mt-4">
       <WSTracks ref="tracksComp" />
