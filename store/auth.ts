@@ -11,6 +11,8 @@ interface user {
   email: string
   role: string
   jwt_token: string
+  plan: string
+  trackUpdatePreference: string
 }
 
 interface registerData {
@@ -116,6 +118,8 @@ export const useAuthStore = defineStore({
               email: savedData.email,
               role: savedData.role,
               jwt_token: token,
+              plan: savedData.plan,
+              trackUpdatePreference: savedData.trackUpdatePreference,
             }
             this.token = token
             this.isLoggedIn = !!savedData
