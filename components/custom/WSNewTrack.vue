@@ -1,9 +1,11 @@
 <script setup>
+import { useUserStore } from '~/store/user'
 import { useTrackStore } from '../../store/track'
 
 const route = useRoute()
 
 const trackStore = useTrackStore()
+const userStore = useUserStore()
 
 const emit = defineEmits(['trackUploaded'])
 
@@ -39,10 +41,11 @@ const addNewTracks = async () => {
 
     await trackStore.uploadTracks(newTracks.value)
 
+    userStore.loadUserData()
+
     emit('trackUploaded')
 
     resetTracksInput()
-    console.log('TODO GUCCI CABESA')
 }
 
 const resetTracksInput = () => {
