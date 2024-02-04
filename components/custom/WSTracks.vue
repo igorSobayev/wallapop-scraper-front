@@ -1,9 +1,11 @@
 <script setup>
 import { useTrackStore } from '../../store/track'
+import { useUserStore } from '~/store/user'
 
 const route = useRoute()
 
 const trackStore = useTrackStore()
+const userStore = useUserStore()
 
 const loadingTracks = ref(false)
 const tracks = ref([])
@@ -44,6 +46,17 @@ const columns = [
         key: 'actions'
     }
 ]
+
+const maxTracksByPlan = computed(() => {
+    const plan = userStore.userData.plan?.toUpperCase()
+    if (!plan) return 5
+
+   return shared.PLANS_DETAILS[plan].MAX_TRACKS
+})
+
+const userTracks = computed(() => {
+    return userStore.userData.tracksCounter
+})
 
 const archiveTrack = async (trackId) => {
     loadingTracks.value = true
@@ -207,8 +220,17 @@ defineExpose({
 
 <template>
     <div>
-        <div class="mb-2">
+        <div class="mb-2 flex justify-between align-center">
             <UButton color="primary" size="md" @click="updateTracksInfo" variant="solid">Update tracks info</UButton>
+            <div class="flex align-center text-2xl font-bold">
+                <span class="inline">
+                    <span :class="{ 
+                        'text-green-500': userTracks < maxTracksByPlan,
+                        'text-yellow-500': userTracks >= maxTracksByPlan / 2 && userTracks < maxTracksByPlan,
+                        'text-red-500': userTracks === maxTracksByPlan
+                        }">{{ userTracks }}</span> <span class="text-gray-500"> / </span> <span class="text-gray-500">{{ maxTracksByPlan }}</span>
+                </span>
+            </div>
         </div>
         <div class="border">
             <UTable :columns="columns" :rows="tracks" :loading="loadingTracks">
