@@ -1,5 +1,27 @@
 <script setup>
 
+import shared from './../../utils/shared.js'
+import { useAuthStore } from '~/store/auth'
+import { useUserStore } from '~/store/user'
+
+// const props = defineProps({ 
+//     userLoggedIn: Boolean,
+// })
+
+const authStore = useAuthStore()
+const userStore = useUserStore()
+const router = useRoute()
+
+const selectPlan = async (plan) => {
+    if (plan === shared.PLANS.FREE) {
+        router.push('/signup')
+    }
+
+    const session = await userStore.createCheckoutSession(plan)
+
+    window.location.replace(session.url)
+}
+
 onNuxtReady(async () => {
 
 })
@@ -8,10 +30,10 @@ onNuxtReady(async () => {
 <template>
   <div class="flex justify-center flex-col gap-2 pt-5 h-full">
     <!-- Plans container -->
-    <div class="flex gap-5 justify-between p-5 relative"> 
-      <span class="absolute -inset-6 bg-gradient-br opacity-20 rounded-3xl blur-2xl"></span>
+    <div class="flex gap-5 p-5 relative" :class="{ 'justify-center': !authStore.userLoggedIn, 'justify-between': authStore.userLoggedIn }"> 
+      <span class="absolute -inset-6 opacity-20 rounded-3xl blur-2xl" :class="{ 'bg-gradient-center': !authStore.userLoggedIn, 'bg-gradient-br': authStore.userLoggedIn }"></span>
       <!-- Plan free -->
-      <div class="w-[30%] z-20 h-full">
+      <div class="w-[30%] z-20 h-full" v-if="authStore.userLoggedIn">
         <UCard class="h-full custom-card-height">
           <Placeholder class="h-full grid">
             <h3 class="text-4xl font-bold">
@@ -29,9 +51,10 @@ onNuxtReady(async () => {
               </div>
             </div>
             <div class="mt-5 self-end">
-              <UButton class="" block>
-                Register now
+              <UButton @click="selectPlan(shared.PLANS.FREE)" class="" block>
+                Try For Free
               </UButton>
+              <span class="text-center block text-xs mt-2 text-slate-500">No card needed!</span>
             </div>
           </Placeholder>
         </UCard>
@@ -59,9 +82,10 @@ onNuxtReady(async () => {
               </div>
             </div>
             <div class="mt-5 self-end">
-              <UButton class="from-purple-600 to-blue-600 bg-gradient-to-r hover:opacity-90" block>
+              <UButton @click="selectPlan(shared.PLANS.MEDIUM)" class="from-purple-600 to-blue-600 bg-gradient-to-r hover:opacity-90" block>
                 Get Medium Plan Now
               </UButton>
+              <span class="text-center block text-xs mt-2 text-slate-500">One time payment. No subscription!</span>
             </div>
           </Placeholder>
         </UCard>
@@ -96,9 +120,10 @@ onNuxtReady(async () => {
               </div>
             </div>
             <div class="mt-5">
-              <UButton class="bg-gradient-to-r from-amber-500 to-pink-500 hover:opacity-90" block>
+              <UButton @click="selectPlan(shared.PLANS.PREMIUM)" class="bg-gradient-to-r from-amber-500 to-pink-500 hover:opacity-90" block>
                 Start Tracking Now!
               </UButton>
+              <span class="text-center block text-xs mt-2 text-slate-500">One time payment. No subscription!</span>
             </div>
           </Placeholder>
         </UCard>
@@ -109,8 +134,13 @@ onNuxtReady(async () => {
 
 <style>
 .bg-gradient-br {
-  background: rgb(255,255,255);
-  background: linear-gradient(90deg, rgba(255,255,255,1) 18%, rgba(0,212,255,1) 52%, rgba(217,4,96,1) 77%);
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 18%, rgba(0,212,255,1) 52%, rgba(217,4,96,1) 77%);
+}
+
+.bg-gradient-center {
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 10%, rgba(0,212,255,1) 39%, rgba(217,4,96,1) 58%, rgba(255,255,255,1) 90%);
 }
 
 .custom-card-height > div:nth-child(1) {
