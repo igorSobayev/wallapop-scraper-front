@@ -64,6 +64,8 @@ const archiveTrack = async (trackId) => {
     await trackStore.archiveTrack(trackId)
 
     await loadTracksInfo()
+
+    userStore.loadUserData()
 }
 
 const deleteTrack = async (trackId) => {
@@ -72,6 +74,8 @@ const deleteTrack = async (trackId) => {
     await trackStore.deleteTrack(trackId)
 
     await loadTracksInfo()
+
+    userStore.loadUserData()
 }
 
 const syncTrack = async (trackId) => {
