@@ -18,14 +18,18 @@ export const useUserStore = defineStore('user', () => {
     return user
   }
 
-  async function createCheckoutSession (plan = 'premium'): Promise<types.User | unknown> {
-    const returnPage = window.location.href
+  async function createCheckoutSession (plan = 'premium'): Promise<unknown> {
+    if (!plan) return
 
-    const session: types.User | unknown = await $fetch(`${baseUrl}/user/create-checkout-session/${authStore.user.id}`, {
+    const returnPage = window.location.href
+    const succeededPage = `${window.location.origin}/users/${authStore.user.username}` 
+
+    const session: unknown = await $fetch(`${baseUrl}/user/create-checkout-session/${authStore.user.id}`, {
       method: 'POST',
       body: {
         plan,
         returnPage,
+        succeededPage,
       },
       credentials: 'include',
     }).catch(async () => {
