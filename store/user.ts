@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { useAuthStore } from './auth'
+import { ref } from '../.nuxt/imports'
 import types from './types'
 
 export const useUserStore = defineStore('user', () => {
@@ -7,13 +8,17 @@ export const useUserStore = defineStore('user', () => {
 
   const baseUrl = useRuntimeConfig().public.API_BASE_URL
 
+  const userData = ref({} as types.User)
+
   async function loadUserData (): Promise<types.User | unknown> {
-    const user: types.User | unknown = await $fetch(`${baseUrl}/user/${authStore.user.id}`, {
+    const user = await $fetch(`${baseUrl}/user/${authStore.user.id}`, {
       method: 'GET',
       credentials: 'include',
     }).catch(async () => {
       await authStore.redirectLogin()
-    })
+    }) as types.User
+
+    userData.value = user
 
     return user
   }
@@ -42,5 +47,6 @@ export const useUserStore = defineStore('user', () => {
   return {
     loadUserData,
     createCheckoutSession,
+    userData,
   }
 })
