@@ -1,4 +1,5 @@
 export type User = {
+    _id: string,
     username: string
     email: string
     avatar: string
@@ -9,6 +10,7 @@ export type User = {
     creationDate: date
     avgRating: number
     recipesNumber: string
+    trackUpdatePreference: string
 }
 
 export type EditUserParams = {

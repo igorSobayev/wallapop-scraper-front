@@ -8,17 +8,19 @@ const route = useRoute()
 
 const trackStore = useTrackStore()
 const userStore = useUserStore()
-const authStore = useAuthStore()
-const nextUpdateOur = ref('')
 
-const getNextUpdateHour = () => {
-    const user = authStore.user
+const updateOptions = ref([])
+
+const trackUpdatePreference = computed(() => {
+    return userStore.userData.trackUpdatePreference
+})
+
+const nextUpdateHour = computed(() => {
+    const user = userStore.userData
+
     const now = new Date()
 
-    console.log(now)
-
     let nextUpdate
-    console.log(user)
 
     switch (user.trackUpdatePreference) {
         case shared.PLANS_CONFIG.DAILY:
@@ -43,12 +45,9 @@ const getNextUpdateHour = () => {
             nextUpdate.setHours(now.getHours() + 1, 0, 0, 0)
             break
         default:
-            return 'No se illo'
+            return 'Unknown'
     }
 
-    console.log(nextUpdate)
-
-    console.log(nextUpdate.getMinutes())
     const hora = nextUpdate.getHours()
     const minutos = nextUpdate.getMinutes().toString().padStart(2, '0')
     const dia = nextUpdate.getDate()
@@ -56,15 +55,105 @@ const getNextUpdateHour = () => {
     const año = nextUpdate.getFullYear();
 
     return `${hora}:${minutos} ${dia}/${mes}/${año}`
-}
+})
 
 onNuxtReady(async () => {
-    nextUpdateOur.value = getNextUpdateHour()
+    updateOptions.value = [
+        [
+            {
+                id: shared.PLANS_CONFIG.DAILY,
+                label: 'Cada 24 horas',
+                click: async () => {
+                    await userStore.changeTrackUpdatePreference(shared.PLANS_CONFIG.DAILY)
+                }
+            },
+            {
+                id: shared.PLANS_CONFIG.TWICE,
+                label: 'Cada 12 horas',
+                click: async () => {
+                    await userStore.changeTrackUpdatePreference(shared.PLANS_CONFIG.TWICE)
+                }
+            },
+            {
+                id: shared.PLANS_CONFIG.SIX_HOURS,
+                label: 'Cada 6 horas',
+                click: async () => {
+                    await userStore.changeTrackUpdatePreference(shared.PLANS_CONFIG.SIX_HOURS)
+                }
+            },
+            {
+                id: shared.PLANS_CONFIG.THREE_HOURS,
+                label: 'Cada 3 horas',
+                click: async () => {
+                    await userStore.changeTrackUpdatePreference(shared.PLANS_CONFIG.THREE_HOURS)
+                }
+            },
+            {
+                id: shared.PLANS_CONFIG.ONE_HOUR,
+                label: 'Cada hora',
+                click: async () => {
+                    await userStore.changeTrackUpdatePreference(shared.PLANS_CONFIG.ONE_HOUR)
+                }
+            }
+        ]
+    ]
+
+    // Not nice :/
+    setTimeout((() => {
+        const userPlan = userStore.userData.plan
+
+        for (const option of updateOptions.value[0]) {
+            if (userPlan === shared.PLANS.PREMIUM) {
+                option.disabled = false
+                continue
+            }
+
+            if (userPlan === shared.PLANS.MEDIUM) {
+
+                if (
+                    option.id === shared.PLANS_CONFIG.DAILY ||
+                    option.id === shared.PLANS_CONFIG.TWICE ||
+                    option.id === shared.PLANS_CONFIG.SIX_HOURS
+                ) {
+                    option.disabled = false
+                    continue
+                }
+            }
+
+            if (userPlan === shared.PLANS.FREE) {
+
+                if (option.id === shared.PLANS_CONFIG.DAILY) {
+                    option.disabled = false
+                    continue
+                }
+
+            }
+
+            option.disabled = true
+        }
+    }), 1000)
+
+
 })
 </script>
 
 <template>
-    <div class="">
-        La proxima actualización de los datos será: <span class="font-bold">{{ nextUpdateOur }}</span>
+    <div class="flex flex-row items-center gap-2">
+        <div class="">
+            La proxima actualización de los datos será: <span class="font-bold">{{ nextUpdateHour }}</span>
+        </div>
+        <div class="font-5xl mx-3">
+            |
+        </div>
+
+        <div class="w-[150px]">
+            <UDropdown :items="updateOptions" :popper="{ placement: 'bottom-start' }">
+                <UButton color="white" :label="$t(`update_preference_${trackUpdatePreference}`)" trailing-icon="i-heroicons-chevron-down-20-solid" />
+
+                <template #item="{ item }">
+                    <div class="truncate flex w-full p-1" :class="{ 'bg-green-100': item.id === trackUpdatePreference }">{{ item.label }}</div>
+                </template>
+            </UDropdown>
+        </div>
     </div>
 </template>

@@ -22,6 +22,24 @@ export const useUserStore = defineStore('user', () => {
 
     return user
   }
+  
+  async function changeTrackUpdatePreference (trackUpdatePreference: string): Promise<void> {
+
+    if (trackUpdatePreference === userData.value.trackUpdatePreference) return
+    
+    await $fetch(`${baseUrl}/user/track-update-preference`, {
+      method: 'PUT',
+      body: {
+        userId: userData.value._id,
+        trackUpdatePreference,
+      },
+      credentials: 'include',
+    }).catch(async () => {
+      await authStore.redirectLogin()
+    })
+
+    await loadUserData()
+  }
 
   async function createCheckoutSession (plan = 'premium'): Promise<unknown> {
     if (!plan) return
@@ -47,6 +65,7 @@ export const useUserStore = defineStore('user', () => {
   return {
     loadUserData,
     createCheckoutSession,
+    changeTrackUpdatePreference,
     userData,
   }
 })
