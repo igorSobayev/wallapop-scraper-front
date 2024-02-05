@@ -1,6 +1,6 @@
 export default defineI18nConfig(() => ({
     legacy: false,
-    locale: 'en',
+    locale: 'es',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected'
@@ -91,6 +91,11 @@ export default defineI18nConfig(() => ({
         recipeTitleRequired: 'The recipe title is required',
         recipeSlug: 'URL to the recipe',
         recipeSlugDescription: 'This URL generates from the title on publish the recipe',
+        update_preference_daily: 'Every day',
+        update_preference_twice: 'Every 12 hours',
+        update_preference_six_hours: 'Every 6 hours',
+        update_preference_three_hours: 'Every 3 hours',
+        update_preference_one_hour: 'Every hour',
       },
       es: {
         welcome: 'Bienvenido',
@@ -177,6 +182,11 @@ export default defineI18nConfig(() => ({
         recipeTitleRequired: 'El titulo de la receta es requerido',
         recipeSlug: 'URL de la receta',
         recipeSlugDescription: 'Esta URL se genera a partir del titulo de la receta cuando se publica',
+        update_preference_daily: 'Cada día',
+        update_preference_twice: 'Cada 12 horas',
+        update_preference_six_hours: 'Cada 6 horas',
+        update_preference_three_hours: 'Cada 3 horas',
+        update_preference_one_hour: 'Cada hora',
       }
     }
   }))

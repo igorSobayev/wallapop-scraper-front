@@ -4,6 +4,10 @@ import { useTrackStore } from '~/store/track'
 import { useAuthStore } from '~/store/auth'
 import shared from '~/utils/shared'
 
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
 const route = useRoute()
 
 const trackStore = useTrackStore()
@@ -62,35 +66,35 @@ onNuxtReady(async () => {
         [
             {
                 id: shared.PLANS_CONFIG.DAILY,
-                label: 'Cada 24 horas',
+                label: t('update_preference_daily'),
                 click: async () => {
                     await userStore.changeTrackUpdatePreference(shared.PLANS_CONFIG.DAILY)
                 }
             },
             {
                 id: shared.PLANS_CONFIG.TWICE,
-                label: 'Cada 12 horas',
+                label: t('update_preference_twice'),
                 click: async () => {
                     await userStore.changeTrackUpdatePreference(shared.PLANS_CONFIG.TWICE)
                 }
             },
             {
                 id: shared.PLANS_CONFIG.SIX_HOURS,
-                label: 'Cada 6 horas',
+                label: t('update_preference_six_hours'),
                 click: async () => {
                     await userStore.changeTrackUpdatePreference(shared.PLANS_CONFIG.SIX_HOURS)
                 }
             },
             {
                 id: shared.PLANS_CONFIG.THREE_HOURS,
-                label: 'Cada 3 horas',
+                label: t('update_preference_three_hours'),
                 click: async () => {
                     await userStore.changeTrackUpdatePreference(shared.PLANS_CONFIG.THREE_HOURS)
                 }
             },
             {
                 id: shared.PLANS_CONFIG.ONE_HOUR,
-                label: 'Cada hora',
+                label: t('update_preference_one_hour'),
                 click: async () => {
                     await userStore.changeTrackUpdatePreference(shared.PLANS_CONFIG.ONE_HOUR)
                 }
