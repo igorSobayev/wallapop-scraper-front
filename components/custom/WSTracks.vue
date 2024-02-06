@@ -1,6 +1,9 @@
 <script setup>
 import { useTrackStore } from '../../store/track'
 import { useUserStore } from '~/store/user'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const route = useRoute()
 
@@ -8,7 +11,75 @@ const trackStore = useTrackStore()
 const userStore = useUserStore()
 
 const loadingTracks = ref(false)
+const rawTracks = ref([])
 const tracks = ref([])
+
+// Compare dates vars
+const selectedCompareDate = ref(shared.COMPARE_DATES_OPTIONS.LAST_ELEMENT)
+const compareDateOptions = [
+        [
+            {
+                id: shared.COMPARE_DATES_OPTIONS.LAST_ELEMENT,
+                label: t('compare_date_last_element'),
+                click: async () => {
+                    selectedCompareDate.value = shared.COMPARE_DATES_OPTIONS.LAST_ELEMENT
+                }
+            },
+            {
+                id: shared.COMPARE_DATES_OPTIONS.TWELVE,
+                label: t('compare_date_twelve'),
+                click: async () => {
+                    selectedCompareDate.value = shared.COMPARE_DATES_OPTIONS.TWELVE
+                }
+            },
+            {
+                id: shared.COMPARE_DATES_OPTIONS.YESTERDAY,
+                label: t('compare_date_yesterday'),
+                click: async () => {
+                    selectedCompareDate.value = shared.COMPARE_DATES_OPTIONS.YESTERDAY
+                }
+            },
+            {
+                id: shared.COMPARE_DATES_OPTIONS.THREE_DAYS,
+                label: t('compare_date_three_days'),
+                click: async () => {
+                    selectedCompareDate.value = shared.COMPARE_DATES_OPTIONS.THREE_DAYS
+                }
+            },
+            {
+                id: shared.COMPARE_DATES_OPTIONS.FIVE_DAYS,
+                label: t('compare_date_five_days'),
+                click: async () => {
+                    selectedCompareDate.value = shared.COMPARE_DATES_OPTIONS.FIVE_DAYS
+                }
+            },
+            {
+                id: shared.COMPARE_DATES_OPTIONS.ONE_WEEK,
+                label: t('compare_date_one_week'),
+                click: async () => {
+                    selectedCompareDate.value = shared.COMPARE_DATES_OPTIONS.ONE_WEEK
+                }
+            },
+            {
+                id: shared.COMPARE_DATES_OPTIONS.FIRST_ELEMENT,
+                label: t('compare_date_first_element'),
+                click: async () => {
+                    selectedCompareDate.value = shared.COMPARE_DATES_OPTIONS.FIRST_ELEMENT
+                }
+            }
+        ]
+    ]
+
+// Update info of the price views and favs on change the compare date
+watch(selectedCompareDate, (() => {
+
+    loadingTracks.value = true
+
+    buildTracksTable()
+
+    loadingTracks.value = false
+
+}))
 
 const columns = [
     {
@@ -137,9 +208,15 @@ const updateTracksInfo = async () => {
 
 const loadTracksInfo = async () => {
     loadingTracks.value = true
-    const rawTracks = await trackStore.loadTracks()
-    tracks.value = rawTracks.map(track => {
+    rawTracks.value = await trackStore.loadTracks()
 
+    buildTracksTable()
+
+    loadingTracks.value = false
+}
+
+const buildTracksTable = () => {
+    tracks.value = rawTracks.value.map(track => {
         track.class = getTrackStyle(track)
 
         track.viewsUpdate = getTrackViewsUpdate(track)
@@ -150,7 +227,6 @@ const loadTracksInfo = async () => {
 
         return track
     })
-    loadingTracks.value = false
 }
 
 const getTrackStyle = (track) => {
@@ -178,11 +254,7 @@ const getTrackViewsUpdate = (track) => {
 
     const views = track.views
 
-    trackToCompare = track.lastElement
-
-    if (!track.lastElement && track.historial) {
-        trackToCompare = track.historial[track.historial.length - 1]
-    }
+    trackToCompare = getTrackToCompare(track)
 
     if (!trackToCompare) {
         return viewsUpdate
@@ -202,9 +274,7 @@ const getTrackFavsUpdate = (track) => {
 
     trackToCompare = track.lastElement
 
-    if (!track.lastElement && track.historial) {
-        trackToCompare = track.historial[track.historial.length - 1]
-    }
+    trackToCompare = getTrackToCompare(track)
 
     if (!trackToCompare) {
         return favsUpdate
@@ -223,11 +293,7 @@ const getPriceUpdate = (track) => {
 
     const actualPrice = track.price
 
-    trackToCompare = track.lastElement
-
-    if (!track.lastElement && track.historial) {
-        trackToCompare = track.historial[track.historial.length - 1]
-    }
+    trackToCompare = getTrackToCompare(track)
 
     if (!trackToCompare) {
         return priceUpdate
@@ -236,6 +302,55 @@ const getPriceUpdate = (track) => {
     priceUpdate = actualPrice - trackToCompare.price
 
     return priceUpdate
+}
+
+const getTrackToCompare = (track) => {
+    let trackToCompare = track.lastElement
+
+    // Si tiene historial, es que es premium TODO hacer un check igualmente
+    if (!trackToCompare && track.historial?.length) {
+        
+        if (selectedCompareDate.value === shared.COMPARE_DATES_OPTIONS.LAST_ELEMENT) {
+            trackToCompare = track.historial[track.historial.length - 1]
+        }
+
+        if (selectedCompareDate.value === shared.COMPARE_DATES_OPTIONS.FIRST_ELEMENT) {
+            trackToCompare = track.historial[0]
+        }
+
+        trackToCompare = findCloser(track.historial, getBaseTime.value)
+    }
+
+    return trackToCompare
+}
+
+// Base time looking into the compare date selected
+const getBaseTime = computed(() => {
+    const now = new Date()
+
+    switch (selectedCompareDate.value) {
+        case shared.COMPARE_DATES_OPTIONS.TWELVE:
+            return new Date(now.getTime() - (12 * 60 * 60 * 1000))
+        case shared.COMPARE_DATES_OPTIONS.YESTERDAY:
+            return new Date(now.getTime() - (24 * 60 * 60 * 1000))
+        case shared.COMPARE_DATES_OPTIONS.THREE_DAYS:
+            return new Date(now.getTime() - (3 * 24 * 60 * 60 * 1000))
+        case shared.COMPARE_DATES_OPTIONS.FIVE_DAYS:
+            return new Date(now.getTime() - (5 * 24 * 60 * 60 * 1000))
+        case shared.COMPARE_DATES_OPTIONS.ONE_WEEK:
+            return new Date(now.getTime() - (7 * 24 * 60 * 60 * 1000))
+        default:
+            return null
+    }
+})
+
+// Search the closer date to the selected compare date (baseTime)
+const findCloser = (list, baseTime) => {
+  return list.reduce((prev, curr) => {
+    const prevDate = Math.abs(new Date(prev.updateDate) - baseTime);
+    const currentDate = Math.abs(new Date(curr.updateDate) - baseTime);
+    return currentDate < prevDate ? curr : prev;
+  });
 }
 
 onNuxtReady(async () => {
@@ -260,6 +375,18 @@ defineExpose({
                         }">{{ userTracks }}</span> <span class="text-gray-500"> / </span> <span class="text-gray-500">{{ maxTracksByPlan }}</span>
                 </span>
             </div>
+        </div>
+        <div class="border p-2 flex gap-2 items-center py-4">
+            <div>
+                Fecha comparación de los datos: 
+            </div>
+            <UDropdown :items="compareDateOptions" :popper="{ placement: 'bottom-start' }">
+                <UButton color="white" :label="$t(`compare_date_${selectedCompareDate}`)" trailing-icon="i-heroicons-chevron-down-20-solid" />
+
+                <template #item="{ item }">
+                    <div class="truncate flex w-full p-1" :class="{ 'bg-green-100': item.id === selectedCompareDate }">{{ item.label }}</div>
+                </template>
+            </UDropdown>
         </div>
         <div class="border">
             <UTable :columns="columns" :rows="tracks" :loading="loadingTracks">

@@ -96,6 +96,13 @@ export default defineI18nConfig(() => ({
         update_preference_six_hours: 'Every 6 hours',
         update_preference_three_hours: 'Every 3 hours',
         update_preference_one_hour: 'Every hour',
+        compare_date_last_element: 'Last sync',
+        compare_date_twelve: '12 hours',
+        compare_date_yesterday: 'Yesterday',
+        compare_date_three_days: '3 days ago',
+        compare_date_five_days: '5 days ago',
+        compare_date_one_week: 'Ago one week',
+        compare_date_first_element: 'First sync',
       },
       es: {
         welcome: 'Bienvenido',
@@ -187,6 +194,13 @@ export default defineI18nConfig(() => ({
         update_preference_six_hours: 'Cada 6 horas',
         update_preference_three_hours: 'Cada 3 horas',
         update_preference_one_hour: 'Cada hora',
+        compare_date_last_element: 'Última sincronización',
+        compare_date_twelve: '12 horas',
+        compare_date_yesterday: 'Ayer',
+        compare_date_three_days: 'Hace 3 días',
+        compare_date_five_days: 'Hace 5 días',
+        compare_date_one_week: 'Hace una semana',
+        compare_date_first_element: 'Primer registro',
       }
     }
   }))

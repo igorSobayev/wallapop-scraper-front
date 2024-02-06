@@ -27,6 +27,15 @@ const config = {
         'THREE_HOURS': 'three_hours',
         'ONE_HOUR': 'one_hour',
     },
+    COMPARE_DATES_OPTIONS: {
+        'LAST_ELEMENT': 'last_element',
+        'TWELVE': 'twelve',
+        'YESTERDAY': 'yesterday',
+        'THREE_DAYS': 'three_days',
+        'FIVE_DAYS': 'five_days',
+        'ONE_WEEK': 'one_week',
+        'FIRST_ELEMENT': 'first_element',
+    },
     AVAILABLE_PLATFORMS: {
         'WALLAPOP': 'wallapop',
     },
