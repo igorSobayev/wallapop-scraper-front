@@ -68,7 +68,7 @@ onNuxtReady(async () => {
         <div class="w-full flex gap-2 items-center">
             <div class="w-[80%]">
                 <UInput icon="i-heroicons-folder-arrow-down" :loading="tracksInputLoading" v-model="newTracksRaw" size="md" color="white" :trailing="false"
-                    placeholder="Add link to the product" />
+                    placeholder="Add link to the product or list of links separated by commas" />
             </div>
             <div>
                 <UButton color="primary" size="md" @click="addNewTracks" variant="solid">Add track</UButton>
