@@ -24,19 +24,23 @@ const columns = [
     },
     {
         key: 'views',
-        label: 'Visitas'
+        label: 'Visitas',
+        sortable: true
     },
     {
         key: 'favs',
-        label: 'Likes'
+        label: 'Likes',
+        sortable: true
     },
     {
         key: 'price',
-        label: 'Precio'
+        label: 'Precio',
+        sortable: true
     },
     {
         key: 'updateDate',
-        label: 'Fecha sync'
+        label: 'Fecha sync',
+        sortable: true
     },
     {
         key: 'state',
@@ -170,8 +174,15 @@ const getTrackStyle = (track) => {
 const getTrackViewsUpdate = (track) => {
     let viewsUpdate = 0
 
+    let trackToCompare
+
     const views = track.views
-    const trackToCompare = track.lastElement
+
+    trackToCompare = track.lastElement
+
+    if (!track.lastElement && track.historial) {
+        trackToCompare = track.historial[track.historial.length - 1]
+    }
 
     if (!trackToCompare) {
         return viewsUpdate
@@ -185,8 +196,15 @@ const getTrackViewsUpdate = (track) => {
 const getTrackFavsUpdate = (track) => {
     let favsUpdate = 0
 
+    let trackToCompare
+
     const favs = track.favs
-    const trackToCompare = track.lastElement
+
+    trackToCompare = track.lastElement
+
+    if (!track.lastElement && track.historial) {
+        trackToCompare = track.historial[track.historial.length - 1]
+    }
 
     if (!trackToCompare) {
         return favsUpdate
@@ -201,8 +219,15 @@ const getPriceUpdate = (track) => {
     // TODO
     let priceUpdate = 0
 
+    let trackToCompare
+
     const actualPrice = track.price
-    const trackToCompare = track.lastElement
+
+    trackToCompare = track.lastElement
+
+    if (!track.lastElement && track.historial) {
+        trackToCompare = track.historial[track.historial.length - 1]
+    }
 
     if (!trackToCompare) {
         return priceUpdate
