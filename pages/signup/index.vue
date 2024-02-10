@@ -54,7 +54,7 @@ async function submit () {
 
 onNuxtReady(() => {
     if (authStore.isLoggedIn) {
-        router.push('/recetas')
+        router.push(`/users/${authStore.user.username}`)
     }
 })
 </script>
@@ -88,7 +88,7 @@ onNuxtReady(() => {
     <div v-else class="flex items-center justify-center h-[80vh]">
         <UAlert icon="i-emojione-v1-party-popper" color="primary" variant="solid" :title="state.alertTitle">
             <template #description>
-                <span>{{ $t('nowYouCanStartCreatingRecipes') }}</span>
+                <span>{{ $t('registerFormSend') }}</span>
             </template>
         </UAlert>
     </div>
