@@ -8,14 +8,14 @@ export default defineI18nConfig(() => ({
     messages: {
       en: {
         welcome: 'Welcome',
-        succesfullyRegistered: 'You have successfully registered!',
+        succesfullyRegistered: `You're almost there!`,
         passwordsNotMatch: 'Passwords do not match!',
         required: 'Required',
         user: 'User',
         password: 'Password',
         repeatPassword: 'Repeat Password',
         signup: 'Register',
-        nowYouCanStartCreatingRecipes: `Now you can start creating great recipes, let's get to it!`,
+        registerFormSend: `You just need to verify your address in the email we sent you!`,
         login: 'Login',
         forgotPassword: 'Forgot your password?',
         privateProfile: 'Private profile',
@@ -103,17 +103,18 @@ export default defineI18nConfig(() => ({
         compare_date_five_days: '5 days ago',
         compare_date_one_week: 'Ago one week',
         compare_date_first_element: 'First sync',
+        username: 'Username',
       },
       es: {
         welcome: 'Bienvenido',
-        succesfullyRegistered: '¡Te has registrado con éxito!',
+        succesfullyRegistered: '¡Ya casi lo tienes!',
         passwordsNotMatch: 'Las contraseñas no coinciden!',
         required: 'Requerido',
         user: 'Usuario',
         password: 'Contraseña',
         repeatPassword: 'Repetir Contraseña',
         signup: 'Registrarse',
-        nowYouCanStartCreatingRecipes: '¡Ahora ya puedes empezar a crear recetas geniales, a por ellas!',
+        registerFormSend: '¡Solo falta que verifiques tu dirección el correo que te hemos enviado!',
         login: 'Iniciar sesión',
         forgotPassword: '¿Olvidaste la contraseña?',
         privateProfile: 'Perfil privado',
@@ -201,6 +202,7 @@ export default defineI18nConfig(() => ({
         compare_date_five_days: 'Hace 5 días',
         compare_date_one_week: 'Hace una semana',
         compare_date_first_element: 'Primer registro',
+        username: 'Nombre de usuario',
       }
     }
   }))
