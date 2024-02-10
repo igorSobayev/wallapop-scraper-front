@@ -165,6 +165,15 @@ export const useAuthStore = defineStore({
         }
       })
         .catch(error => { throw error })
+    },
+
+    async verify (username: string, code: string) {
+      await $fetch(`${this.baseUrl}/auth/signup/verify?username=${username}&code=${code}`, {
+        method: 'GET',
+      })
+        .catch(error => { 
+          throw error.response._data
+        })
     }
   },
   getters: {
