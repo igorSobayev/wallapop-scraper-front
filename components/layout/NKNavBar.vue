@@ -5,8 +5,8 @@
                 <img class="w-64 cursor-pointer" src="./../../assets/logo.png" alt="...">
             </div>
             <div class="nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[40vh] left-0 top-[-1000%] md:w-auto  w-full flex items-center px-5 z-50" :class="{ 'top-[101%]': menuOpenned }">
-                <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
-                    <NuxtLink class="hover:text-gray-500" to="/home">{{ $t('home') }}</NuxtLink>
+                <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8" v-if="authStore.isLoggedIn">
+                    <NuxtLink class="hover:text-gray-500" to="/">{{ $t('home') }}</NuxtLink>
                     <NuxtLink class="hover:text-gray-500" :to="`/users/${authStore.user.username}`">{{ $t('productsDashboard') }}</NuxtLink>
                 </ul>
             </div>
