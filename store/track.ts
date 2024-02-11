@@ -21,6 +21,17 @@ export const useTrackStore = defineStore('track', () => {
     })
   }
 
+  // Upload the demo track
+  async function uploadDemoTrack (demoUrl: string): Promise<void> {
+    console.log(demoUrl)
+    return $fetch(`${baseUrl}/track/upload-demo`, {
+      method: 'POST',
+      body: {
+        demoUrl,
+      }
+    })
+  }
+
   // Load actual tracks
   async function loadTracks (): Promise<types.Track[] | unknown> {
     const userId = authStore.user.id
@@ -100,5 +111,6 @@ export const useTrackStore = defineStore('track', () => {
     deleteTrack,
     archiveTrack,
     syncTrack,
+    uploadDemoTrack,
   }
 })
