@@ -33,7 +33,7 @@ onNuxtReady(async () => {
     <div class="flex gap-5 p-5 relative" :class="{ 'justify-center': !authStore.userLoggedIn, 'justify-between': authStore.userLoggedIn }"> 
       <span class="absolute -inset-6 opacity-20 rounded-3xl blur-2xl" :class="{ 'bg-gradient-center': !authStore.userLoggedIn, 'bg-gradient-br': authStore.userLoggedIn }"></span>
       <!-- Plan free -->
-      <div class="w-[30%] z-20 h-full" v-if="authStore.userLoggedIn">
+      <div class="w-[30%] z-20 h-full" v-if="!authStore.userLoggedIn">
         <UCard class="h-full custom-card-height">
           <Placeholder class="h-full grid">
             <h3 class="text-4xl font-bold">
