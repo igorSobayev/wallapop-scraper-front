@@ -12,7 +12,7 @@ const user = ref()
 const items = ref()
 
 const logout = () => {
-    authStore.logout()
+  authStore.logout()
 }
 
 onNuxtReady(async () => {
