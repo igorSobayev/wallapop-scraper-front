@@ -2,8 +2,10 @@
 import { useAuthStore } from '../../../store/auth'
 import { useI18n } from 'vue-i18n'
 import { VueSpinnerBall } from 'vue3-spinners'
+import { useUserStore } from '~/store/user'
 
 const authStore = useAuthStore()
+const userStore = useUserStore()
 const router = useRouter()
 const route = useRoute()
 const { t } = useI18n()
@@ -50,10 +52,20 @@ async function verify (username, code) {
     loading.value = true
     showForm.value = false
 
-    await authStore.verify(username, code).then(res => {
+    await authStore.verify(username, code).then(async res => {
         loading.value = false
         showForm.value = false
         errorOnVerify.value = false
+
+        // Check if comes from landing
+        const planCookie = useCookie('wsPlan')
+
+        if (planCookie.value) {
+            const session = await userStore.createCheckoutSession(planCookie.value)
+
+            window.location.replace(session.url)
+        }        
+
     }).catch(e => {
         errorOnVerify.value = true
         loading.value = false
