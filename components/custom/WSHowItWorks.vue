@@ -2,9 +2,9 @@
 
 
 <template>
-    <div class="flex flex-col items-center">
+    <div class="flex flex-col items-center gap-2">
         <h3 class="text-sm font-bold bg-gradient-to-r from-amber-500 to-pink-500 bg-clip-text text-transparent">¿Cómo funciona?</h3>
-        <div class="mb-5 text-lg">Empieza el seguimiento de todos tus productos hoy mismo</div>
+        <div class="mb-5 text-2xl">Empieza el seguimiento de todos tus productos hoy mismo</div>
         <div class="flex flex-col mt-5">
             <div class="flex flex-row gap-3 items-center">
                 <div class="w-12 h-12 text-xl font-bold border-2 rounded-full flex justify-center items-center mr-5 ">1</div>

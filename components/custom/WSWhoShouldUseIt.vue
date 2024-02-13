@@ -2,9 +2,9 @@
 
 
 <template>
-    <div class="flex flex-col items-center">
+    <div class="flex flex-col items-center gap-2">
         <h3 class="text-sm font-bold bg-gradient-to-r from-amber-500 to-pink-500 bg-clip-text text-transparent">¿Quién debería de utilizarla?</h3>
-        <div class="mb-5 text-lg">El tracker es ideal para todo tipo de perfiles</div>
+        <div class="mb-5 text-2xl">El tracker es ideal para todo tipo de perfiles</div>
         <div class="flex flex-row justify-center mt-5 w-full">
             <div class="w-[30%]">
                 <h4 class="text-3xl mb-4">Compadores</h4>
