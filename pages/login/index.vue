@@ -36,7 +36,10 @@ async function submit () {
   await form.value.validate()
   authStore
     .login(state.value)
-    .then((_response) => router.push("/"))
+    .then((_response) => {
+      // TODO add loading
+      router.push("/")
+    })
     .catch((error) => console.log("API error", error))
 }
 
