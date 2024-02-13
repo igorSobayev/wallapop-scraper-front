@@ -52,15 +52,20 @@ export const useAuthStore = defineStore({
         .then(response => {
           /* Update Pinia state */
           this.user = response as user
-          this.token = this.user.jwt_token
-          this.isLoggedIn = true
-          const cookieToken = useCookie('isLogged')
-          cookieToken.value = 'true'
-          /* Store user in local storage to keep them logged in between page refreshes */
-          localStorage.setItem('user', JSON.stringify(this.user))
-          localStorage.setItem('token', JSON.stringify(this.token))
+          this.setAsLogin()
         })
         .catch(error => { throw error })
+    },
+
+    setAsLogin () {
+      /* Update Pinia state */
+      this.token = this.user.jwt_token
+      this.isLoggedIn = true
+      const cookieToken = useCookie('isLogged')
+      cookieToken.value = 'true'
+      /* Store user in local storage to keep them logged in between page refreshes */
+      localStorage.setItem('user', JSON.stringify(this.user))
+      localStorage.setItem('token', JSON.stringify(this.token))
     },
 
     async logout() {
@@ -84,7 +89,7 @@ export const useAuthStore = defineStore({
     async redirectLogin() {
       const router = useRouter()
 
-      await this.logout()
+      // await this.logout()
       router.push('/login')
     },
 
@@ -169,7 +174,11 @@ export const useAuthStore = defineStore({
 
     async verify (username: string, code: string) {
       await $fetch(`${this.baseUrl}/auth/signup/verify?username=${username}&code=${code}`, {
-        method: 'GET',
+        method: 'POST',
+        credentials: 'include', // SUPER MEGA IMPORTANTE SIN ESTO NO SE PUEDE CREAR UN TOKEN DE SESSION OMFG
+      }).then(response => {
+        this.user = response as user
+        this.setAsLogin()
       })
         .catch(error => { 
           throw error.response._data
