@@ -10,16 +10,25 @@ import { useUserStore } from '~/store/user'
 
 const authStore = useAuthStore()
 const userStore = useUserStore()
-const router = useRoute()
+const router = useRouter()
 
 const selectPlan = async (plan) => {
-    if (plan === shared.PLANS.FREE) {
-        router.push('/signup')
-    }
+  if (plan === shared.PLANS.FREE) {
+    router.push('/signup')
+    return
+  }
 
-    const session = await userStore.createCheckoutSession(plan)
+  if (!authStore.userLoggedIn) {
+    const planCookie = useCookie('wsPlan')
+    planCookie.value = plan
 
-    window.location.replace(session.url)
+    router.push('/signup')
+    return
+  }
+
+  const session = await userStore.createCheckoutSession(plan)
+
+  window.location.replace(session.url)
 }
 
 onNuxtReady(async () => {
