@@ -57,13 +57,13 @@ const runDemo = () => {
         <div class="mt-[50px] mb-[50px]" v-show="demoActive">
             <WSDemoTrack ref="demoTrackTable" />
         </div>
-        <div class="mt-[150px]">
+        <div class="mt-[100px] border rounded-lg bg-primary-100 py-[50px]">
             <WSHowItWorks />
         </div>
-        <div class="mt-[150px] mb-[150px]">
+        <div class="mt-[100px] mb-[100px] border rounded-lg bg-gray-100 py-[50px]">
             <WSWhoShouldUseIt />
         </div>
-        <div class="mt-5 mb-[150px]">
+        <div class="mt-5 mb-[100px] border rounded-lg pt-[50px] pb-[150px]">
             <WSHomePricingTable />
         </div>
     </div>
