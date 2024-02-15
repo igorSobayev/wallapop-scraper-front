@@ -1,4 +1,5 @@
 <script setup>
+import WSHomeHeaderImages from '~/components/custom/WSHomeHeaderImages.vue'
 import WSDemoTrack from '~/components/custom/WSDemoTrack.vue'
 import WSHowItWorks from '~/components/custom/WSHowItWorks.vue'
 import WSWhoShouldUseIt from '~/components/custom/WSWhoShouldUseIt.vue'
@@ -51,7 +52,7 @@ const runDemo = () => {
                 </div>
             </div>
             <div class="w-[50%] p-3">
-                FOTO
+                <WSHomeHeaderImages />
             </div>
         </div>
         <div class="mt-[50px] mb-[50px]" v-show="demoActive">
