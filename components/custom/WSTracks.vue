@@ -348,6 +348,7 @@ onNuxtReady(async () => {
 
 defineExpose({
     loadTracksInfo,
+    loadingTracks,
   })
 </script>
 

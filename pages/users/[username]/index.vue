@@ -21,6 +21,10 @@ const trackUploaded = () => {
   tracksComp.value.loadTracksInfo()
 }
 
+const trackUploading = () => {
+  tracksComp.value.loadingTracks = true
+}
+
 onNuxtReady(async () => {
 
 })
@@ -30,7 +34,7 @@ onNuxtReady(async () => {
   <div class="flex justify-center flex-col gap-2 pt-5">
     <!-- Add new track -->
     <div class="mb-4">
-      <WSNewTrack @track-uploaded="trackUploaded" />
+      <WSNewTrack @track-uploaded="trackUploaded" @track-uploading="trackUploading" />
     </div>
     <hr class="my-4">
     <div class="my-4">

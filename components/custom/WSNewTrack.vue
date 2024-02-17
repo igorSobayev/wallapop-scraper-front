@@ -7,7 +7,7 @@ const route = useRoute()
 const trackStore = useTrackStore()
 const userStore = useUserStore()
 
-const emit = defineEmits(['trackUploaded'])
+const emit = defineEmits(['trackUploaded', 'trackUploading'])
 
 const newTracks = ref([])
 const newTracksRaw = ref()
@@ -38,6 +38,8 @@ const addNewTracks = async () => {
     console.log(wrongTracks.value)
 
     tracksInputLoading.value = true
+
+    emit('trackUploading')
 
     await trackStore.uploadTracks(newTracks.value)
 
