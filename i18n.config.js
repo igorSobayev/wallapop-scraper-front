@@ -182,6 +182,11 @@ export default defineI18nConfig(() => ({
         next_update_on: 'Next sync:',
         tracks_update_tracks_info_btn: 'Sync tracks',
         tracks_date_compare: 'Date to compare info:',
+        config_actual_plan: 'Plan:',
+        config_tracks_num: 'Tracks number:',
+        config_update_dates: 'Sync configuration:',
+        config_active_since: 'Active since:',
+        
       },
       es: {
         welcome: 'Bienvenido',
@@ -359,6 +364,10 @@ export default defineI18nConfig(() => ({
         next_update_on: 'Proxima actualización:',
         tracks_update_tracks_info_btn: 'Sincronizar tracks',
         tracks_date_compare: 'Fecha comparación de los datos:',
+        config_actual_plan: 'Plan Actual:',
+        config_tracks_num: 'Número de tracks:',
+        config_update_dates: 'Frecuencia sincronización:',
+        config_active_since: 'Activo desde:',
 
       }
     }

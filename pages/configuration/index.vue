@@ -4,6 +4,7 @@ import { useUserStore } from './../../store/user'
 import { onNuxtReady, ref } from '../../.nuxt/imports'
 import NKPasswordInput from '../../components/custom/NKPasswordInput.vue'
 import { useI18n } from 'vue-i18n'
+import utils from '~/utils'
 
 const toast = useToast()
 const authStore = useAuthStore()
@@ -21,24 +22,7 @@ useHead({
   ],
 })
 
-const state = ref({
-  username: '',
-  email: '',
-  name: '',
-  surname: '',
-  avatar: '',
-  description: '',
-  editing: false,
-  newAvatar: undefined,
-  newAvatarPreview: ''
-})
-
-const originalValues = ref({
-  name: '',
-  surname: '',
-  avatar: '',
-  description: '',
-})
+const state = ref({})
 
 const changingPassword = ref(false)
 
@@ -48,12 +32,9 @@ const changePasswordState = ref({
     repeatedNewPassword: '',
 })
 
-const validate = (state) => {
-  const errors = []
-  if (!state.name) errors.push({ path: 'name', message: t('required') })
-  if (!state.surname) errors.push({ path: 'surname', message: t('required') })
-  return errors
-}
+const verificationDate = computed(() => {
+    return utils.formatDate(state.value.verificationDate, true)
+})
 
 const validatePassword = (state) => {
   const errors = []
@@ -64,44 +45,7 @@ const validatePassword = (state) => {
   return errors
 }
 
-const form = ref()
 const formPassword = ref()
-
-async function submit () {
-  await form.value.validate()
-
-  let newAvatar
-
-  if (state.value.newAvatar) {
-    newAvatar = state.value.newAvatar
-  }
-
-  userStore
-        .edit({
-            name: state.value.name,
-            surname: state.value.surname,
-            description: state.value.description,
-            id: authStore.user.id,
-            newAvatar,
-        })
-        .then(() => {
-            updatedSuccesfully()
-        })
-        .catch((error) => console.log("API error", error))
-
-}
-
-async function edit () {
-    state.value.editing = true
-}
-
-async function cancelEditing () {
-    state.value.editing = false
-    state.value.name = originalValues.value.name
-    state.value.surname = originalValues.value.surname
-    state.value.avatar = originalValues.value.avatar
-    state.value.description = originalValues.value.description
-}
 
 async function changePassword () {
 
@@ -122,97 +66,50 @@ function cancelChangePassword () {
     changingPassword.value = false
 }
 
-async function changedAvatar (event) {
-    const fileObj = event.target.files
-
-    state.value.newAvatar = new FormData()
-    state.value.newAvatar.append('file', fileObj[0])
-    state.value.newAvatar.append('path', '/avatar')
-    
-    // Set preview
-    state.value.newAvatarPreview = URL.createObjectURL(fileObj[0])
-}
-
-async function updatedSuccesfully () {
-    await loadUserData()
-    state.value.editing = false
-}
-
 async function loadUserData () {
-    const user = await userStore.loadUserData()
-    originalValues.value.name = user.name
-    originalValues.value.surname = user.surname
-    originalValues.value.description = user.description
-    originalValues.value.avatar = user.description
-
-    state.value.username = user.username
-    state.value.email = user.email
-    state.value.name = user.name
-    state.value.surname = user.surname
-    state.value.description = user.description
-    state.value.avatar = user.avatar
+    state.value = await userStore.loadUserData()
 }
 
 onNuxtReady(async () => {
     await loadUserData()
+    toast.add({ title: t('passwordUpdated') })
 })
 </script>
 
 <template>
     <div class="flex items-center justify-center">
-        <UForm
-            ref="form"
-            :validate="validate"
-            :state="state"
-            @submit="submit"
-            :validate-on="['submit']"
-            class="bg-white p-12 rounded-lg border-2 w-[60%]"
-            v-if="!changingPassword"
-        >
+        <div class="bg-white p-12 rounded-lg border-2 w-[60%]" v-if="!changingPassword">
             <div>
                 <div class="flex justify-end mb-5">
-                    <UButton v-if="!state.editing" @click="edit" icon="i-heroicons-pencil-square" size="md" :label="$t('edit')" color="primary" />
-                    <UButton v-else @click="cancelEditing" icon="i-heroicons-x-mark" size="md" :label="$t('cancel')" color="primary" />
                     <UButton @click="changingPassword = true" icon="i-heroicons-key" size="md" :label="$t('changePassword')" color="gray" class="ml-3" />
                 </div>
-                <div class="grid grid-cols-3">
-                    <div class="flex justify-center align-center flex-col items-center gap-5 p-5">
-                        <div v-if="!state.editing" :style="'background-image: url(' + state.avatar + ');'" class="bg-cover bg-center bg-no-repeat rounded-full h-36 w-36"></div>
-                        <div v-if="state.editing" class="flex flex-col align-center items-center justify-center gap-3">
-                            <div v-if="state.newAvatarPreview" :style="'background-image: url(' + state.newAvatarPreview + ');'" class="bg-cover bg-center bg-no-repeat rounded-full h-36 w-36"></div>
-                            <div v-else :style="'background-image: url(' + state.avatar + ');'" class="bg-cover bg-center bg-no-repeat rounded-full h-36 w-36"></div>
-                            <UInput @change="changedAvatar" icon="i-heroicons-pencil-square" class="mt-3" type="file" />
-                            <span class="text-slate-800 text-xs">{{ $t('recommended') }} 256 x 256</span>
-                        </div>
-                    </div>
-                    <div class="col-span-2">
-                        <UFormGroup name="username" :label="$t('user')" class="mt-3">
-                            <UInput disabled v-model="state.username" />
-                        </UFormGroup>
-
-                        <UFormGroup name="email" label="Email" class="mt-3">
-                            <UInput type="email" disabled v-model="state.email" placeholder="you@example.com" icon="i-heroicons-envelope" />
-                        </UFormGroup>        
-                    </div>
-                </div>
-                <div class="flex gap-4">
-                    <UFormGroup name="name" :label="$t('name')" class="mt-3 w-[50%]">
-                        <UInput :disabled="!state.editing" v-model="state.name" />
+                <div class="flex gap-2">
+                    <UFormGroup name="username" :label="$t('user')" class="mt-3 w-[50%]">
+                        <UInput disabled v-model="state.username" />
                     </UFormGroup>
 
-                    <UFormGroup name="surname" :label="$t('surname')" class="mt-3 w-[50%]">
-                        <UInput :disabled="!state.editing" v-model="state.surname" />
-                    </UFormGroup>
+                    <UFormGroup name="email" label="Email" class="mt-3 w-[50%]">
+                        <UInput type="email" disabled v-model="state.email" placeholder="you@example.com" icon="i-heroicons-envelope" />
+                    </UFormGroup>        
                 </div>
-                <div class="mt-3">
-                    <UFormGroup name="description" :label="$t('description')">
-                        <UTextarea :disabled="!state.editing" :rows="8" variant="outline" v-model="state.description" />
-                    </UFormGroup>
+                <div class="flex gap-2 flex-col mt-3">
+                    <div>
+                        {{ $t('config_actual_plan') }} <b class="capitalize">{{ state.plan }}</b>
+                    </div>
+                    <div>
+                       {{ $t('config_tracks_num') }} <b>{{ state.tracksCounter }}</b>
+                    </div>
+                    <div>
+                        {{ $t('config_update_dates') }} <b>{{ $t(`update_preference_${state.trackUpdatePreference}`) }}</b>
+                    </div>
+                    <div>
+                        {{ $t('config_active_since') }} <b>{{ verificationDate }}</b>
+                    </div>
                 </div>
 
                 <UButton v-if="state.editing" block type="submit" class="mt-5" :label="$t('save')" />
             </div>
-        </UForm>
+        </div>
         <!-- Change password form -->
         <UForm
             ref="formPassword"
