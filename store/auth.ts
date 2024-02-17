@@ -69,6 +69,8 @@ export const useAuthStore = defineStore({
     },
 
     async logout() {
+      const router = useRouter()
+
       const cookieToken = useCookie('isLogged')
       const tokenCookie = useCookie('token')
       localStorage.removeItem('user')
@@ -83,13 +85,15 @@ export const useAuthStore = defineStore({
       await $fetch(`${this.baseUrl}/auth/signout`, {
         method: 'POST',
         credentials: 'include',
+      }).then(() => {
+        router.push('/')  
       })
     },
 
     async redirectLogin() {
       const router = useRouter()
 
-      // await this.logout()
+      await this.logout()
       router.push('/login')
     },
 
