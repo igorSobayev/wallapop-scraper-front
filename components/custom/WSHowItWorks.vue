@@ -3,8 +3,8 @@
 
 <template>
     <div class="flex flex-col items-center gap-2">
-        <h3 class="text-sm font-bold bg-gradient-to-r from-amber-500 to-pink-500 bg-clip-text text-transparent">¿Cómo funciona?</h3>
-        <div class="mb-5 text-2xl">Empieza el seguimiento de todos tus productos hoy mismo</div>
+        <h3 class="text-sm font-bold bg-gradient-to-r from-amber-500 to-pink-500 bg-clip-text text-transparent">{{ $t('how_it_works') }}</h3>
+        <div class="mb-5 text-2xl">{{ $t('how_subtitle') }}</div>
         <div class="flex flex-col mt-5">
             <div class="flex flex-row gap-3 items-center">
                 <div class="h-14 w-14 bg-gradient-to-r from-amber-500 to-pink-500 font-bold flex p-1 rounded-full mr-5 ">
@@ -13,8 +13,8 @@
                     </span>
                 </div>
                 <div class="">
-                    <h4 class="text-xl mb-3 font-bold">Introduce el enlace del producto</h4>
-                    <p class="text-sm w-80">Busca en Wallapop el producto al que quieres realizar el seguimiento y copia su enlace en el tracker</p>
+                    <h4 class="text-xl mb-3 font-bold">{{ $t('how_step_one_title') }}</h4>
+                    <p class="text-sm w-80">{{ $t('how_step_one_desc') }}</p>
                 </div>
             </div>
             <div class="text-center mt-5 mb-5"><UIcon name="i-heroicons-arrow-long-down text-5xl font-bold bg-gradient-to-b from-amber-500 to-pink-500" /></div>
@@ -25,8 +25,8 @@
                     </span>
                 </div>
                 <div class="">
-                    <h4 class="text-xl mb-3 font-bold">El bot busca la información</h4>
-                    <p class="text-sm w-80">Se va a realizar una búsqueda automática inicial para cargar la información del producto</p>
+                    <h4 class="text-xl mb-3 font-bold">{{ $t('how_step_two_title') }}</h4>
+                    <p class="text-sm w-80">{{ $t('how_step_two_desc') }}</p>
                 </div>
             </div>
             <div class="text-center mt-5 mb-5"><UIcon name="i-heroicons-arrow-long-down text-5xl font-bold bg-gradient-to-b from-amber-500 to-pink-500" /></div>
@@ -37,8 +37,8 @@
                     </span>
                 </div>
                 <div class="">
-                    <h4 class="text-xl mb-3 font-bold">Recibe actualizaciones</h4>
-                    <p class="text-sm w-80">Una vez cargada la información, el bot va a realizar actualizaciones periodicas para counstruir un historico de la evolución del estado del producto</p>
+                    <h4 class="text-xl mb-3 font-bold">{{ $t('how_step_three_title') }}</h4>
+                    <p class="text-sm w-80">{{ $t('how_step_three_desc') }}</p>
                 </div>
             </div>
         </div>

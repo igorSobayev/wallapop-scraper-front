@@ -46,7 +46,7 @@ onNuxtReady(async () => {
         <UCard class="h-full custom-card-height">
           <Placeholder class="h-full grid">
             <h3 class="text-4xl font-bold">
-              Free plan
+              {{ $t('pricing_table_free_plan_title') }}
             </h3>
             <div class="text-3xl font-bold from-purple-600 via-pink-600 to-blue-600 bg-gradient-to-r bg-clip-text text-transparent mt-3">
               0€
@@ -56,14 +56,14 @@ onNuxtReady(async () => {
                 <UIcon name="i-heroicons-check text-green-500 text-2xl" /> <span>5 tracks</span>
               </div>
               <div class="flex align-center gap-2">
-                <UIcon name="i-heroicons-check text-green-500 text-2xl" /> <span>Daily update</span>
+                <UIcon name="i-heroicons-check text-green-500 text-2xl" /> <span>{{ $t('pricing_table_free_plan_adv_one') }}</span>
               </div>
             </div>
             <div class="mt-5 self-end">
               <UButton @click="selectPlan(shared.PLANS.FREE)" class="" block>
-                Try For Free
+                {{ $t('pricing_table_free_plan_try_free') }}
               </UButton>
-              <span class="text-center block text-xs mt-2 text-slate-500">No card needed!</span>
+              <span class="text-center block text-xs mt-2 text-slate-500">{{ $t('pricing_table_free_plan_footer') }}</span>
             </div>
           </Placeholder>
         </UCard>
@@ -74,7 +74,7 @@ onNuxtReady(async () => {
           <Placeholder class="h-full grid">
             <div>
               <h3 class="text-4xl font-bold">
-                Medium plan
+                {{ $t('pricing_table_medium_plan_title') }}
               </h3>
               <div class="mt-3">
                 <span class="text-3xl font-bold from-purple-600 to-blue-600 bg-gradient-to-r bg-clip-text text-transparent inline">
@@ -86,15 +86,15 @@ onNuxtReady(async () => {
                   <UIcon name="i-heroicons-check text-green-500 text-2xl" /> <span>30 tracks</span>
                 </div>
                 <div class="flex align-center gap-2">
-                  <UIcon name="i-heroicons-check text-green-500 text-2xl" /> <span>Updates every 24/12/6 hours</span>
+                  <UIcon name="i-heroicons-check text-green-500 text-2xl" /> <span>{{ $t('pricing_table_medium_plan_adv_one') }}</span>
                 </div>
               </div>
             </div>
             <div class="mt-5 self-end">
               <UButton @click="selectPlan(shared.PLANS.MEDIUM)" class="from-purple-600 to-blue-600 bg-gradient-to-r hover:opacity-90" block>
-                Get Medium Plan Now
+                {{ $t('pricing_table_medium_plan_try') }}
               </UButton>
-              <span class="text-center block text-xs mt-2 text-slate-500">One time payment. No subscription!</span>
+              <span class="text-center block text-xs mt-2 text-slate-500">{{ $t('pricing_table_no_payment_footer') }}</span>
             </div>
           </Placeholder>
         </UCard>
@@ -102,12 +102,12 @@ onNuxtReady(async () => {
       <!-- Plan premium -->
       <div class="w-[30%] z-20 relative h-full">
         <span class="absolute w-[100%] flex justify-center top-[-10px] h-[20px] text-sm">
-          <span class="text-white px-2 font-bold bg-gradient-to-r from-amber-500 to-pink-500 rounded-md">MOST POPULAR</span>
+          <span class="text-white px-2 font-bold bg-gradient-to-r from-amber-500 to-pink-500 rounded-md">{{ $t('pricing_table_premium_tag') }}</span>
         </span>
         <UCard class="border-2 border-primary h-full">
           <Placeholder class="h-32">
             <h3 class="text-4xl font-bold">
-              Premium plan
+              {{ $t('pricing_table_premium_title') }}
             </h3>
             <div class="mt-3">
               <span class="text-3xl font-bold bg-gradient-to-r from-amber-500 to-pink-500 bg-clip-text text-transparent inline">
@@ -119,20 +119,20 @@ onNuxtReady(async () => {
                 <UIcon name="i-heroicons-check text-green-500 text-2xl" /> <span>100 tracks</span>
               </div>
               <div class="flex align-center gap-2">
-                <UIcon name="i-heroicons-check text-green-500 text-2xl" /> <span>Update every hour</span>
+                <UIcon name="i-heroicons-check text-green-500 text-2xl" /> <span>{{ $t('pricing_table_premium_adv_one') }}</span>
               </div>
               <div class="flex align-center gap-2">
-                <UIcon name="i-heroicons-check text-green-500 text-2xl" /> <span>Manual sync</span>
+                <UIcon name="i-heroicons-check text-green-500 text-2xl" /> <span>{{ $t('pricing_table_premium_adv_two') }}</span>
               </div>
               <div class="flex align-center gap-2">
-                <UIcon name="i-heroicons-check text-green-500 text-2xl" /> <span>Compare historic data</span>
+                <UIcon name="i-heroicons-check text-green-500 text-2xl" /> <span>{{ $t('pricing_table_premium_adv_three') }}</span>
               </div>
             </div>
             <div class="mt-5">
               <UButton @click="selectPlan(shared.PLANS.PREMIUM)" class="bg-gradient-to-r from-amber-500 to-pink-500 hover:opacity-90" block>
-                Start Tracking Now!
+                {{ $t('pricing_table_premium_try') }}
               </UButton>
-              <span class="text-center block text-xs mt-2 text-slate-500">One time payment. No subscription!</span>
+              <span class="text-center block text-xs mt-2 text-slate-500">{{ $t('pricing_table_no_payment_footer') }}</span>
             </div>
           </Placeholder>
         </UCard>

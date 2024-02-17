@@ -65,31 +65,31 @@ const columns = [
     },
     {
         key: 'title',
-        label: 'Título'
+        label: t('demo_title')
     },
     {
         key: 'views',
-        label: 'Visitas',
+        label: t('demo_views'),
         sortable: true
     },
     {
         key: 'favs',
-        label: 'Likes',
+        label: t('demo_favs'),
         sortable: true
     },
     {
         key: 'price',
-        label: 'Precio',
+        label: t('demo_price'),
         sortable: true
     },
     {
         key: 'updateDate',
-        label: 'Fecha sync',
+        label: t('demo_sync'),
         sortable: true
     },
     {
         key: 'state',
-        label: 'Estado'
+        label: t('demo_state')
     },
     {
         key: 'actions'
@@ -99,18 +99,18 @@ const columns = [
 const items = () => [
     [
         {
-            label: 'Sync info',
+            label: t('demo_items_sync_info'),
             icon: 'i-heroicons-pencil-square-20-solid',
             disabled: true
         }
     ],
     [
         {
-            label: 'Archive',
+            label: t('demo_items_archive'),
             icon: 'i-heroicons-archive-box-20-solid',
             disabled: true
         }, {
-            label: 'Delete',
+            label: t('demo_items_delete'),
             icon: 'i-heroicons-trash-20-solid',
             disabled: true
         }
@@ -136,9 +136,9 @@ const uploadDemoTrack = async (demoUrl) => {
         trackError.value = true
 
         if (e.name === 'DemoProductDeletedError') {
-            trackErrorMessage.value = 'El producto ha sido eliminado de la plataforma'
+            trackErrorMessage.value = t('demo_error_product_removed')
         } else {
-            trackErrorMessage.value = 'Pruebe con un enlace valido'
+            trackErrorMessage.value = t('demo_error_try_valid')
         }
     })
 
@@ -174,7 +174,7 @@ defineExpose({
 <template>
     <div>
         <div class="mb-2 flex justify-between align-center">
-            <UButton color="primary" size="md" disabled variant="solid">Actualizar información</UButton>
+            <UButton color="primary" size="md" disabled variant="solid">{{ t('demo_sync_info') }}</UButton>
             <div class="flex align-center text-2xl font-bold">
                 <span class="inline">
                     <span class="text-green-500">1</span> <span class="text-gray-500"> / </span> <span class="text-gray-500">5</span>
@@ -182,12 +182,12 @@ defineExpose({
             </div>
         </div>
         <div v-if="trackError">
-            <p>Ha ocurrido un error al cargar la Demo</p>
+            <p>{{ $t('demo_error_title') }}</p>
             <span class="text-red-600">{{ trackErrorMessage }}</span>
         </div>
         <div class="border p-2 flex gap-2 items-center py-4">
             <div>
-                Fecha comparación de los datos:
+                {{ $t('demo_dates_compare') }}
             </div>
             <UDropdown :items="compareDateOptions" :popper="{ placement: 'bottom-start' }">
                 <UButton color="white" :label="$t(`compare_date_${selectedCompareDate}`)" trailing-icon="i-heroicons-chevron-down-20-solid" />
@@ -250,10 +250,10 @@ defineExpose({
                 </template>
 
                 <template #state-data="{ row }">
-                    <UBadge color="primary" v-if="!row.sold && !row.reserved && !row.deletedFromPlatform" size="sm" class="mr-1" variant="solid">Disponible</UBadge>
-                    <UBadge color="white" v-if="row.sold" size="sm" class="mr-1" variant="solid">Vendido</UBadge>
-                    <UBadge color="gray" v-if="row.reserved" size="sm" variant="solid">Reservado</UBadge>
-                    <UBadge color="red" v-if="row.deletedFromPlatform" size="sm" variant="solid">Eliminado</UBadge>
+                    <UBadge color="primary" v-if="!row.sold && !row.reserved && !row.deletedFromPlatform" size="sm" class="mr-1" variant="solid">{{ $t('product_state_available') }}</UBadge>
+                    <UBadge color="white" v-if="row.sold" size="sm" class="mr-1" variant="solid">{{ $t('product_state_sold') }}</UBadge>
+                    <UBadge color="gray" v-if="row.reserved" size="sm" variant="solid">{{ $t('product_state_reserved') }}</UBadge>
+                    <UBadge color="red" v-if="row.deletedFromPlatform" size="sm" variant="solid">{{ $t('product_state_removed') }}</UBadge>
                 </template>
 
                 <template #actions-data="{ row }">

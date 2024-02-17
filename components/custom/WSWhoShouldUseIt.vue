@@ -3,51 +3,51 @@
 
 <template>
     <div class="flex flex-col items-center gap-2">
-        <h3 class="text-sm font-bold bg-gradient-to-r from-amber-500 to-pink-500 bg-clip-text text-transparent">¿Quién debería de utilizarla?</h3>
-        <div class="mb-5 text-2xl">El tracker es ideal para todo tipo de perfiles</div>
+        <h3 class="text-sm font-bold bg-gradient-to-r from-amber-500 to-pink-500 bg-clip-text text-transparent">{{ $t('who_title') }}</h3>
+        <div class="mb-5 text-2xl">{{ $t('who_subtitle') }}</div>
         <div class="flex flex-row justify-center mt-5 w-full">
             <div class="w-[30%]">
-                <h4 class="text-3xl mb-4">Compadores</h4>
+                <h4 class="text-3xl mb-4">{{ $t('who_buyer') }}</h4>
                 <div class="leading-5 flex flex-col gap-3">
                     <p>
-                        ¿Quieres estar siempre al tanto de las actualizaciones de los productos que te intersan en Wallapop?
+                        {{ $t('who_buyer_text_one') }}
                     </p>
                     <p>
-                        Simplemente introduce el enlace del producto que te interesa, y recibe información actualizada sobre cambios en su precio, visitas, favoritos y disponibilidad.
+                        {{ $t('who_buyer_text_two') }}
                     </p>
                     <p>
-                        ¡Ahorra tiempo y no te pierdas ninguna oportunidad con Wallatracker!
+                        {{ $t('who_buyer_text_three') }}
                     </p>
                 </div>
                 <div class="mt-4">
-                    <div class="flex items-center gap-1 mb-2"><UIcon name="i-heroicons-check text-green-500 text-md" /> Actualizaciones constantes</div>
-                    <div class="flex items-center gap-1 mb-2"><UIcon name="i-heroicons-check text-green-500 text-md" /> Decisiones informadas</div>
-                    <div class="flex items-center gap-1 mb-2"><UIcon name="i-heroicons-check text-green-500 text-md" /> Ahorro de tiempo</div>
-                    <div class="flex items-center gap-1 mb-2"><UIcon name="i-heroicons-check text-green-500 text-md" /> Exploración eficiente</div>
+                    <div class="flex items-center gap-1 mb-2"><UIcon name="i-heroicons-check text-green-500 text-md" /> {{ $t('who_buyer_adv_one') }}</div>
+                    <div class="flex items-center gap-1 mb-2"><UIcon name="i-heroicons-check text-green-500 text-md" /> {{ $t('who_buyer_adv_two') }}</div>
+                    <div class="flex items-center gap-1 mb-2"><UIcon name="i-heroicons-check text-green-500 text-md" /> {{ $t('who_buyer_adv_three') }}</div>
+                    <div class="flex items-center gap-1 mb-2"><UIcon name="i-heroicons-check text-green-500 text-md" /> {{ $t('who_buyer_adv_four') }}</div>
                 </div>
             </div>
             <div class="w-[10%]"><UDivider class="h-full" label="OR" orientation="vertical" /></div>
             <div class="w-[30%]">
-                <h4 class="text-3xl mb-4">Vendedores</h4>
+                <h4 class="text-3xl mb-4">{{ $t('who_seller') }}</h4>
                 <div class="leading-5 flex flex-col gap-3">
                     <p>
-                        ¿Quieres gestionar todos tus productos a la venta desde un mismo panel?
+                        {{ $t('who_seller_text_one') }}
                     </p>
                     <p>
-                        Con Wallatracker podrás tomar las mejores decisiones para saber si tu producto esta bien configurado.
+                        {{ $t('who_seller_text_two') }}
                     </p>
                     <p>
-                        Gracias a las actualizaciones constantes, podrás saber las tendencias y si tu producto se esta siendo visitado.
+                        {{ $t('who_seller_text_three') }}
                     </p>
                     <p>
-                        ¡Ahorra tiempo y toma mejores decisiones!
+                        {{ $t('who_seller_text_four') }}
                     </p>
                 </div>
                 <div class="mt-4">
-                    <div class="flex items-center gap-1 mb-2"><UIcon name="i-heroicons-check text-green-500 text-md" /> Ahorro de tiempo</div>
-                    <div class="flex items-center gap-1 mb-2"><UIcon name="i-heroicons-check text-green-500 text-md" /> Gestión eficiente</div>
-                    <div class="flex items-center gap-1 mb-2"><UIcon name="i-heroicons-check text-green-500 text-md" /> Decisiones inteligentes</div>
-                    <div class="flex items-center gap-1 mb-2"><UIcon name="i-heroicons-check text-green-500 text-md" /> Velocidad de reacción</div>
+                    <div class="flex items-center gap-1 mb-2"><UIcon name="i-heroicons-check text-green-500 text-md" /> {{ $t('who_seller_adv_one') }}</div>
+                    <div class="flex items-center gap-1 mb-2"><UIcon name="i-heroicons-check text-green-500 text-md" /> {{ $t('who_seller_adv_two') }}</div>
+                    <div class="flex items-center gap-1 mb-2"><UIcon name="i-heroicons-check text-green-500 text-md" /> {{ $t('who_seller_adv_three') }}</div>
+                    <div class="flex items-center gap-1 mb-2"><UIcon name="i-heroicons-check text-green-500 text-md" /> {{ $t('who_seller_adv_four') }}</div>
                 </div>
             </div>
         </div>
