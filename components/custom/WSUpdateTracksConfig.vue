@@ -144,7 +144,7 @@ onNuxtReady(async () => {
 <template>
     <div class="flex flex-row items-center gap-2">
         <div class="">
-            La proxima actualización de los datos será: <span class="font-bold">{{ nextUpdateHour }}</span>
+            {{ $t('next_update_on') }} <span class="font-bold">{{ nextUpdateHour }}</span>
         </div>
         <div class="font-5xl mx-3">
             |

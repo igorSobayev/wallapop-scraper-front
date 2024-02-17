@@ -176,6 +176,12 @@ export default defineI18nConfig(() => ({
         pricing_table_premium_adv_two: 'Manual Synchronisation',
         pricing_table_premium_adv_three: 'Historical comparison',
         pricing_table_premium_try: 'Start now',
+        new_track: 'New Track',
+        new_track_placeholder: 'Add link to the product or list of links separated by commas',
+        new_track_add: 'Add new track',
+        next_update_on: 'Next sync:',
+        tracks_update_tracks_info_btn: 'Sync tracks',
+        tracks_date_compare: 'Date to compare info:',
       },
       es: {
         welcome: 'Bienvenido',
@@ -347,6 +353,13 @@ export default defineI18nConfig(() => ({
         pricing_table_premium_adv_two: 'Sincronización manual',
         pricing_table_premium_adv_three: 'Comparación histórico',
         pricing_table_premium_try: '¡Empieza ahora!',
+        new_track: 'Track nuevo',
+        new_track_placeholder: 'Añade el enlace a tu producto o una lista de enlaces separados por comas',
+        new_track_add: 'Añadir track',
+        next_update_on: 'Proxima actualización:',
+        tracks_update_tracks_info_btn: 'Sincronizar tracks',
+        tracks_date_compare: 'Fecha comparación de los datos:',
+
       }
     }
   }))

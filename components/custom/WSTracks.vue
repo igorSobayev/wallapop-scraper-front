@@ -91,31 +91,31 @@ const columns = [
     },
     {
         key: 'title',
-        label: 'Título'
+        label: t('demo_title')
     },
     {
         key: 'views',
-        label: 'Visitas',
+        label: t('demo_views'),
         sortable: true
     },
     {
         key: 'favs',
-        label: 'Likes',
+        label: t('demo_favs'),
         sortable: true
     },
     {
         key: 'price',
-        label: 'Precio',
+        label: t('demo_price'),
         sortable: true
     },
     {
         key: 'updateDate',
-        label: 'Fecha sync',
+        label: t('demo_sync'),
         sortable: true
     },
     {
         key: 'state',
-        label: 'Estado'
+        label: t('demo_state')
     },
     {
         key: 'actions'
@@ -365,7 +365,7 @@ defineExpose({
 <template>
     <div>
         <div class="mb-2 flex justify-between align-center">
-            <UButton color="primary" size="md" @click="updateTracksInfo" variant="solid">Update tracks info</UButton>
+            <UButton color="primary" size="md" @click="updateTracksInfo" variant="solid">{{ $t('tracks_update_tracks_info_btn') }}</UButton>
             <div class="flex align-center text-2xl font-bold">
                 <span class="inline">
                     <span :class="{ 
@@ -378,7 +378,7 @@ defineExpose({
         </div>
         <div class="border p-2 flex gap-2 items-center py-4">
             <div>
-                Fecha comparación de los datos: 
+                {{ $t('tracks_date_compare') }}
             </div>
             <UDropdown :items="compareDateOptions" :popper="{ placement: 'bottom-start' }">
                 <UButton color="white" :label="$t(`compare_date_${selectedCompareDate}`)" trailing-icon="i-heroicons-chevron-down-20-solid" />
@@ -441,10 +441,10 @@ defineExpose({
                 </template>
 
                 <template #state-data="{ row }">
-                    <UBadge color="primary" v-if="!row.sold && !row.reserved && !row.deletedFromPlatform" size="sm" class="mr-1" variant="solid">Disponible</UBadge>
-                    <UBadge color="white" v-if="row.sold" size="sm" class="mr-1" variant="solid">Vendido</UBadge>
-                    <UBadge color="gray" v-if="row.reserved" size="sm" variant="solid">Reservado</UBadge>
-                    <UBadge color="red" v-if="row.deletedFromPlatform" size="sm" variant="solid">Eliminado</UBadge>
+                    <UBadge color="primary" v-if="!row.sold && !row.reserved && !row.deletedFromPlatform" size="sm" class="mr-1" variant="solid">{{ $t('product_state_available') }}</UBadge>
+                    <UBadge color="white" v-if="row.sold" size="sm" class="mr-1" variant="solid">{{ $t('product_state_sold') }}</UBadge>
+                    <UBadge color="gray" v-if="row.reserved" size="sm" variant="solid">{{ $t('product_state_reserved') }}</UBadge>
+                    <UBadge color="red" v-if="row.deletedFromPlatform" size="sm" variant="solid">{{ $t('product_state_removed') }}</UBadge>
                 </template>
 
                 <template #actions-data="{ row }">

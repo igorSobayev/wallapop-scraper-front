@@ -63,15 +63,15 @@ onNuxtReady(async () => {
 <template>
     <div class="">
         <div class="w-full text-3xl mb-2">
-            New Track
+            {{ $t('new_track') }}
         </div>
         <div class="w-full flex gap-2 items-center">
             <div class="w-[80%]">
                 <UInput icon="i-heroicons-folder-arrow-down" :loading="tracksInputLoading" v-model="newTracksRaw" size="md" color="white" :trailing="false"
-                    placeholder="Add link to the product or list of links separated by commas" />
+                    :placeholder="$t('new_track_placeholder')" />
             </div>
             <div>
-                <UButton color="primary" size="md" @click="addNewTracks" variant="solid">Add track</UButton>
+                <UButton color="primary" size="md" @click="addNewTracks" variant="solid">{{ $t('new_track_add') }}</UButton>
             </div>
         </div>
     </div>
