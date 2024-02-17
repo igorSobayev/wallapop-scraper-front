@@ -43,8 +43,8 @@ async function submit () {
   authStore
     .login(state.value)
     .then((_response) => {
+      router.push(`/users/${authStore.user.username}`)
       loading.value = false
-      router.push("/")
     })
     .catch((error) => {
       loading.value = false

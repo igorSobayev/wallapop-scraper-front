@@ -48,7 +48,7 @@ onNuxtReady(async () => {
 
 <template>
   <UDropdown :items="items" :ui="{ item: { disabled: 'cursor-text select-text' } }" :popper="{ placement: 'bottom-start' }">
-    <UAvatar src="https://i2-prod.dailyrecord.co.uk/incoming/article8543359.ece/ALTERNATES/s1200c/CP47009989.jpg" />
+    <UAvatar :alt="user?.username" />
 
     <template #account="{ item }">
       <div class="text-left">
