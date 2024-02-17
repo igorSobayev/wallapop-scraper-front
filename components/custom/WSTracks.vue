@@ -2,6 +2,7 @@
 import { useTrackStore } from '../../store/track'
 import { useUserStore } from '~/store/user'
 import { useI18n } from 'vue-i18n'
+import utils from '~/utils'
 
 const { t } = useI18n()
 
@@ -186,18 +187,6 @@ const items = (row) => [
         }
     ]
 ]
-
-function formatDate(time) {
-    const date = new Date(time);
-
-    const month = date.toLocaleString('default', { month: '2-digit' });
-    const day = date.toLocaleString('default', { day: '2-digit' });
-
-    const hour = date.toLocaleString('default', { hour: '2-digit' })
-    const minutes = date.toLocaleString('default', { minute: '2-digit' })
-
-    return `${hour}:${minutes} ${day}/${month}`;
-}
 
 const updateTracksInfo = async () => {
     loadingTracks.value = true
@@ -437,7 +426,7 @@ defineExpose({
                 </template>
 
                 <template #updateDate-data="{ row }">
-                    <span class="text-stone-950"> {{ formatDate(row.updateDate) }} </span>
+                    <span class="text-stone-950"> {{ utils.formatDate(row.updateDate) }} </span>
                 </template>
 
                 <template #state-data="{ row }">
