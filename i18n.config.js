@@ -186,7 +186,16 @@ export default defineI18nConfig(() => ({
         config_tracks_num: 'Tracks number:',
         config_update_dates: 'Sync configuration:',
         config_active_since: 'Active since:',
-        
+        privacy_policy_title: 'Privacy Policy',
+        privacy_policy_text_1: `Your privacy is important to us. It is Wallatracker's policy to respect your privacy regarding any information we may collect from you across our website, and other sites we own and operate.`,
+        privacy_policy_text_2: `We only ask for personal information when we truly need it to provide a service to you. We collect it by fair and lawful means, with your knowledge and consent. We also let you know why we're collecting it and how it will be used.`,
+        privacy_policy_text_4: `We only retain collected information for as long as necessary to provide you with your requested service. What data we store, we'll protect within commercially acceptable means to prevent loss and theft, as well as unauthorised access, disclosure, copying, use or modification.`,
+        privacy_policy_text_5: `We don't share any personally identifying information publicly or with third-parties, except when required to by law.`,
+        privacy_policy_text_6: `We act in the capacity of a data controller and a data processor with regard to the personal data processed through Wallatracker and the services in terms of the applicable data protection laws, including the EU General Data Protection Regulation (GDPR).`,
+        privacy_policy_text_7: `Our website may link to external sites that are not operated by us. Please be aware that we have no control over the content and practices of these sites, and cannot accept responsibility or liability for their respective privacy policies.`,
+        privacy_policy_text_8: `You are free to refuse our request for your personal information, with the understanding that we may be unable to provide you with some of your desired services.`,
+        privacy_policy_text_9: `Your continued use of our website will be regarded as acceptance of our practices around privacy and personal information. If you have any questions about how we handle user data and personal information, feel free to contact us.`,
+        privacy_policy_text_10: `This policy is effective as of 17 Feb 2024.`,
       },
       es: {
         welcome: 'Bienvenido',
@@ -368,7 +377,16 @@ export default defineI18nConfig(() => ({
         config_tracks_num: 'Número de tracks:',
         config_update_dates: 'Frecuencia sincronización:',
         config_active_since: 'Activo desde:',
-
+        privacy_policy_title: `Política de privacidad`,
+        privacy_policy_text_1: `Tu privacidad es importante para nosotros. La política de Wallatracker es respetar su privacidad con respecto a cualquier información que podamos recopilar de usted a través de nuestro sitio web, y otros sitios que poseemos y operamos`,
+        privacy_policy_text_2: `Sólo pedimos información personal cuando realmente la necesitamos para prestarte un servicio. La recopilamos por medios justos y legales, con su conocimiento y consentimiento. También le informamos de por qué la recabamos y cómo se utilizará.`,
+        privacy_policy_text_4: `Sólo conservamos la información recopilada durante el tiempo necesario para prestarte el servicio solicitado. Protegeremos los datos que almacenemos con medios comercialmente aceptables para evitar pérdidas y robos, así como el acceso, la divulgación, la copia, el uso o la modificación no autorizados.`,
+        privacy_policy_text_5: `No compartimos ninguna información de identificación personal públicamente ni con terceros, excepto cuando lo exija la ley.`,
+        privacy_policy_text_6: `Actuamos en calidad de responsable del tratamiento y encargado del tratamiento en relación con los datos personales tratados a través de Wallatracker y los servicios en términos de la legislación aplicable en materia de protección de datos, incluido el Reglamento General de Protección de Datos (RGPD) de la UE.`,
+        privacy_policy_text_7: `Nuestro sitio web puede contener enlaces a sitios externos no gestionados por nosotros. Tenga en cuenta que no tenemos ningún control sobre el contenido y las prácticas de estos sitios, y no podemos aceptar responsabilidad alguna por sus respectivas políticas de privacidad`,
+        privacy_policy_text_8: `Usted es libre de rechazar nuestra solicitud de información personal, entendiendo que es posible que no podamos prestarle algunos de los servicios que desea.`,
+        privacy_policy_text_9: `Su uso continuado de nuestro sitio web se considerará como aceptación de nuestras prácticas en materia de privacidad e información personal. Si tiene alguna pregunta sobre cómo tratamos los datos de los usuarios y la información personal, no dude en ponerse en contacto con nosotros.`,
+        privacy_policy_text_10: `Esta política es efectiva desde el 17 Feb 2024.`,        
       }
     }
   }))
