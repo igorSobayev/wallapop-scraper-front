@@ -14,7 +14,7 @@
                 <NKLang />
                 <span v-if="!authStore.isLoggedIn" class="flex items-center gap-2">
                     <UButton to="/login" icon="i-material-symbols-login-sharp" size="md" color="primary" class="nbtn"><span class="sm:block hidden">{{ $t('login') }}</span></UButton>
-                    <UButton to="/signup" icon="i-mingcute-fork-line" size="md" color="gray" class="nbtn"><span class="sm:block hidden">{{ $t('signup') }}</span></UButton>
+                    <UButton to="/signup" icon="i-heroicons-sparkles" size="md" color="gray" class="nbtn"><span class="sm:block hidden">{{ $t('signup') }}</span></UButton>
                 </span>
                 <span v-else class="flex items-center gap-2">
                     <NKProfileNav />
