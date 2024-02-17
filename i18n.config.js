@@ -217,6 +217,7 @@ export default defineI18nConfig(() => ({
         tos_general: `General Terms and Law`,
         tos_general_text: `This Agreement is governed by the laws of Spain. You acknowledge that no joint venture, partnership, employment, or agency relationship exists between you and Wallatracker as a result of your use of these services. You agree not to hold yourself out as a representative, agent or employee of Wallatracker. You agree that Wallatracker will not be liable by reason of any representation, act or omission to act by you.`,
         tos_update: `Last updated: 17 Feb 2024`,
+        footer_title: 'Check the status of your Wallapop products in seconds!',
       },
       es: {
         welcome: 'Bienvenido',
@@ -429,6 +430,7 @@ export default defineI18nConfig(() => ({
         tos_general: `Condiciones generales y legislación`,
         tos_general_text: `Este acuerdo se rige por las leyes de España. Usted reconoce que no existe ninguna relación de empresa conjunta, asociación, empleo o agencia entre usted y Wallatracker como resultado de su uso de estos servicios. Usted se compromete a no actuar como representante, agente o empleado de Wallatracker. Usted acepta que Wallatracker no será responsable de ninguna representación, acto u omisión por su parte`,
         tos_update: `Última actualización: 17 Feb 2024`,
+        footer_title: '¡Revisa el estado de tus productos de Wallapop en segundos!',
       }
     }
   }))
