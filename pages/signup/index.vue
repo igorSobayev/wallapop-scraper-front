@@ -2,6 +2,7 @@
 import { useAuthStore } from '../../store/auth'
 import NKPasswordInput from '../../components/custom/NKPasswordInput.vue'
 import { useI18n } from 'vue-i18n'
+import { VueSpinnerBall } from 'vue3-spinners'
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -16,6 +17,8 @@ useHead({
     },
   ],
 })
+
+const loading = ref(false)
 
 const state = ref({
   username: '',
@@ -40,6 +43,8 @@ const form = ref()
 
 async function submit () {
   await form.value.validate()
+
+    loading.value = true
     authStore
         .signup({
             username: state.value.username,
@@ -47,6 +52,7 @@ async function submit () {
             password: state.value.password,
         })
         .then(() => {
+            loading.value = false
             state.value.userRegistered = true
         })
         .catch((error) => console.log("API error", error))
@@ -60,7 +66,8 @@ onNuxtReady(() => {
 </script>
 
 <template>
-    <div v-if="!state.userRegistered" class="flex items-center justify-center h-[80vh]">
+    <div v-if="!state.userRegistered" class="flex items-center justify-center flex-col h-[80vh]">
+        <VueSpinnerBall v-if="loading" size="30" color="primary" class="text-center" />
         <UForm
             class="bg-white p-5 rounded-md"
             ref="form"
@@ -82,7 +89,12 @@ onNuxtReady(() => {
                 <NKPasswordInput v-model="state.repeatPassword" :label="$t('repeatPassword')" name="repeatPassword" />
             </div>
 
-            <UButton block type="submit" class="mt-5" :label="$t('signup')" />
+            <div class="mt-3">
+                <UCheckbox :label="$t('signup_check_conditions_label')" required />
+                <div class="text-xs"><NuxtLink class="hover:text-gray-500" to="/terms-conditions">{{ $t('signup_check_conditions_text') }}</NuxtLink></div>
+            </div>
+
+            <UButton block type="submit" :disabled="loading" class="mt-5" :label="$t('signup')" />
         </UForm>
     </div>
     <div v-else class="flex items-center justify-center h-[80vh]">

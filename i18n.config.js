@@ -222,6 +222,8 @@ export default defineI18nConfig(() => ({
         tracks_available_on_premium: 'Only available with Premium plan',
         tracks_available_on_premium_btn: 'Change plan',
         nav_plans: 'Planes',
+        signup_check_conditions_label: 'I accept the terms and conditions',
+        signup_check_conditions_text: 'Consult here',
       },
       es: {
         welcome: 'Bienvenido',
@@ -439,6 +441,8 @@ export default defineI18nConfig(() => ({
         tracks_available_on_premium: 'Solo disponible con plan Premium',
         tracks_available_on_premium_btn: 'Cambiar plan',
         nav_plans: 'Planes',
+        signup_check_conditions_label: 'Acepto los términos y condiciones',
+        signup_check_conditions_text: 'Consultar aquí',
       }
     }
   }))
