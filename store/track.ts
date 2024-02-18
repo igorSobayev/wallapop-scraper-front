@@ -56,6 +56,8 @@ export const useTrackStore = defineStore('track', () => {
         userId: userId,
       },
       credentials: 'include',
+    }).catch(error => { 
+      throw error.response._data
     })
   }
 
