@@ -15,13 +15,18 @@ const loadingTracks = ref(false)
 const rawTracks = ref([])
 const tracks = ref([])
 
+const updateError = ref(false)
+const updateErrorMessage = ref('Ha ocurrido un error al sincronizar manualmente')
+
 // Compare dates vars
 const selectedCompareDate = ref(shared.COMPARE_DATES_OPTIONS.LAST_ELEMENT)
-const compareDateOptions = [
+const compareDateOptions = computed(() => {
+    return [
         [
             {
                 id: shared.COMPARE_DATES_OPTIONS.LAST_ELEMENT,
                 label: t('compare_date_last_element'),
+                disabled: showBuyPremiumPlanMsg?.value,
                 click: async () => {
                     selectedCompareDate.value = shared.COMPARE_DATES_OPTIONS.LAST_ELEMENT
                 }
@@ -29,6 +34,7 @@ const compareDateOptions = [
             {
                 id: shared.COMPARE_DATES_OPTIONS.TWELVE,
                 label: t('compare_date_twelve'),
+                disabled: showBuyPremiumPlanMsg?.value,
                 click: async () => {
                     selectedCompareDate.value = shared.COMPARE_DATES_OPTIONS.TWELVE
                 }
@@ -36,6 +42,7 @@ const compareDateOptions = [
             {
                 id: shared.COMPARE_DATES_OPTIONS.YESTERDAY,
                 label: t('compare_date_yesterday'),
+                disabled: showBuyPremiumPlanMsg?.value,
                 click: async () => {
                     selectedCompareDate.value = shared.COMPARE_DATES_OPTIONS.YESTERDAY
                 }
@@ -43,6 +50,7 @@ const compareDateOptions = [
             {
                 id: shared.COMPARE_DATES_OPTIONS.THREE_DAYS,
                 label: t('compare_date_three_days'),
+                disabled: showBuyPremiumPlanMsg?.value,
                 click: async () => {
                     selectedCompareDate.value = shared.COMPARE_DATES_OPTIONS.THREE_DAYS
                 }
@@ -50,6 +58,7 @@ const compareDateOptions = [
             {
                 id: shared.COMPARE_DATES_OPTIONS.FIVE_DAYS,
                 label: t('compare_date_five_days'),
+                disabled: showBuyPremiumPlanMsg?.value,
                 click: async () => {
                     selectedCompareDate.value = shared.COMPARE_DATES_OPTIONS.FIVE_DAYS
                 }
@@ -57,6 +66,7 @@ const compareDateOptions = [
             {
                 id: shared.COMPARE_DATES_OPTIONS.ONE_WEEK,
                 label: t('compare_date_one_week'),
+                disabled: showBuyPremiumPlanMsg?.value,
                 click: async () => {
                     selectedCompareDate.value = shared.COMPARE_DATES_OPTIONS.ONE_WEEK
                 }
@@ -64,12 +74,13 @@ const compareDateOptions = [
             {
                 id: shared.COMPARE_DATES_OPTIONS.FIRST_ELEMENT,
                 label: t('compare_date_first_element'),
+                disabled: showBuyPremiumPlanMsg?.value,
                 click: async () => {
                     selectedCompareDate.value = shared.COMPARE_DATES_OPTIONS.FIRST_ELEMENT
                 }
             }
         ]
-    ]
+    ]})
 
 // Update info of the price views and favs on change the compare date
 watch(selectedCompareDate, (() => {
@@ -134,6 +145,31 @@ const userTracks = computed(() => {
     return userStore.userData.tracksCounter
 })
 
+const haveAdminPerms = computed(() => {
+    return userStore.userData.role === shared.ROLES.ADMIN
+})
+
+const showBuyPremiumPlanMsg = computed(() => {
+    return !haveAdminPerms.value && userStore.userData.plan !== shared.PLANS.PREMIUM
+})
+
+const canRunManualSync = computed(() => {
+
+    const now = new Date()
+    const otherDate = new Date(userStore.userData.lastManualUpdate)
+
+    const difTime = now.getTime() - otherDate.getTime()
+
+    const hoursSinceLastRun = difTime / (1000 * 60 * 60)
+
+    if (haveAdminPerms.value) {
+        return true
+    }
+
+    return hoursSinceLastRun >= 1 && userStore.userData.plan === shared.PLANS.PREMIUM
+
+})
+
 const archiveTrack = async (trackId) => {
     loadingTracks.value = true
 
@@ -155,6 +191,8 @@ const deleteTrack = async (trackId) => {
 }
 
 const syncTrack = async (trackId) => {
+    if (showBuyPremiumPlanMsg.value) return
+
     loadingTracks.value = true
 
     try {
@@ -168,20 +206,20 @@ const syncTrack = async (trackId) => {
 const items = (row) => [
     [
         {
-            label: 'Sync info',
+            label: t('demo_items_sync_info'),
             icon: 'i-heroicons-pencil-square-20-solid',
-            disabled: row.deletedFromPlatform,
+            disabled: row.deletedFromPlatform || showBuyPremiumPlanMsg.value,
             click: () => syncTrack(row._id)
         }
     ],
     [
         {
-            label: 'Archive',
+            label: t('demo_items_archive'),
             icon: 'i-heroicons-archive-box-20-solid',
             disabled: row.deletedFromPlatform,
             click: () => archiveTrack(row._id)
         }, {
-            label: 'Delete',
+            label: t('demo_items_delete'),
             icon: 'i-heroicons-trash-20-solid',
             click: () => deleteTrack(row._id)
         }
@@ -190,7 +228,17 @@ const items = (row) => [
 
 const updateTracksInfo = async () => {
     loadingTracks.value = true
-    await trackStore.updateTracksInfo()
+    try {
+        await trackStore.updateTracksInfo()
+
+        updateError.value = false
+    } catch (e) {
+        updateError.value = true
+        if (e.name === 'ManualRunToSoonError') {
+            updateErrorMessage.value = 'Has intentado ejecutar la sincronización manual demasiado pronto, máximo una vez por hora.'
+        }
+    }
+    
     await loadTracksInfo()
     loadingTracks.value = false
 }
@@ -355,7 +403,12 @@ defineExpose({
 <template>
     <div>
         <div class="mb-2 flex justify-between align-center">
-            <UButton color="primary" size="md" @click="updateTracksInfo" variant="solid">{{ $t('tracks_update_tracks_info_btn') }}</UButton>
+            <div class="flex gap-3 items-center">
+                <UButton color="primary" size="md" v-if="canRunManualSync" @click="updateTracksInfo" variant="solid">{{ $t('tracks_update_tracks_info_btn') }}</UButton>
+                <UButton color="primary" size="md" v-else disabled variant="solid">{{ $t('tracks_update_tracks_info_btn') }}</UButton>
+                <p v-if="updateError" class="text-red-500">{{ updateErrorMessage }}</p>
+                <div v-if="showBuyPremiumPlanMsg">{{ $t('tracks_available_on_premium') }}  <UIcon name="i-heroicons-arrow-right" /> <NuxtLink class="text-green-400" to="/plans">{{ $t('tracks_available_on_premium_btn') }}</NuxtLink></div>
+            </div>
             <div class="flex align-center text-2xl font-bold">
                 <span class="inline">
                     <span :class="{ 
@@ -377,6 +430,7 @@ defineExpose({
                     <div class="truncate flex w-full p-1" :class="{ 'bg-green-100': item.id === selectedCompareDate }">{{ item.label }}</div>
                 </template>
             </UDropdown>
+            <div v-if="showBuyPremiumPlanMsg">{{ $t('tracks_available_on_premium') }}  <UIcon name="i-heroicons-arrow-right" /> <NuxtLink class="text-green-400" to="/plans">{{ $t('tracks_available_on_premium_btn') }}</NuxtLink></div>
         </div>
         <div class="border">
             <UTable :columns="columns" :rows="tracks" :loading="loadingTracks">
