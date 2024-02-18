@@ -14,6 +14,9 @@ const newTracksRaw = ref()
 const wrongTracks = ref([])
 const tracksInputLoading = ref(false)
 
+const errorUploading = ref(false)
+const errorUploadingMsg = ref('')
+
 const addNewTracks = async () => {
     if (!newTracksRaw.value) return
 
@@ -41,7 +44,14 @@ const addNewTracks = async () => {
 
     emit('trackUploading')
 
-    await trackStore.uploadTracks(newTracks.value)
+    try {
+        await trackStore.uploadTracks(newTracks.value)
+
+        errorUploading.value = false
+    } catch (err) {
+        errorUploading.value = true
+        errorUploadingMsg.value = err.message
+    }
 
     userStore.loadUserData()
 
@@ -75,6 +85,9 @@ onNuxtReady(async () => {
             <div>
                 <UButton color="primary" size="md" @click="addNewTracks" variant="solid">{{ $t('new_track_add') }}</UButton>
             </div>
+        </div>
+        <div class="mt-3 text-red-500" v-if="errorUploading">
+            Ha ocurrido un error al subir los tracks: {{ errorUploadingMsg }}
         </div>
     </div>
 </template>
