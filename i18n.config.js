@@ -219,6 +219,9 @@ export default defineI18nConfig(() => ({
         tos_update: `Last updated: 17 Feb 2024`,
         footer_title: 'Check the status of your Wallapop products in seconds!',
         products_dashboard: 'Products Dashboard',
+        tracks_available_on_premium: 'Only available with Premium plan',
+        tracks_available_on_premium_btn: 'Change plan',
+        nav_plans: 'Planes',
       },
       es: {
         welcome: 'Bienvenido',
@@ -433,6 +436,9 @@ export default defineI18nConfig(() => ({
         tos_update: `Última actualización: 17 Feb 2024`,
         footer_title: '¡Revisa el estado de tus productos de Wallapop en segundos!',
         products_dashboard: 'Tabla de productos',
+        tracks_available_on_premium: 'Solo disponible con plan Premium',
+        tracks_available_on_premium_btn: 'Cambiar plan',
+        nav_plans: 'Planes',
       }
     }
   }))
