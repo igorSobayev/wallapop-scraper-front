@@ -224,6 +224,9 @@ export default defineI18nConfig(() => ({
         nav_plans: 'Planes',
         signup_check_conditions_label: 'I accept the terms and conditions',
         signup_check_conditions_text: 'Consult here',
+        verify_verification_ongoing: `We're almost there, we're just finishing verifying your address!`,
+        verify_verifycation_ok: 'You are all set, you can start tracking your products!',
+        verify_verification_btn: 'Go to dashboard',
       },
       es: {
         welcome: 'Bienvenido',
@@ -443,6 +446,9 @@ export default defineI18nConfig(() => ({
         nav_plans: 'Planes',
         signup_check_conditions_label: 'Acepto los términos y condiciones',
         signup_check_conditions_text: 'Consultar aquí',
+        verify_verification_ongoing: '¡Ya casi lo tenemos, se esta terminando de verificar tu dirección!',
+        verify_verifycation_ok: '¡Todo listo, ya puedes empezar a trackear tus productos!',
+        verify_verification_btn: 'Ir al panel',
       }
     }
   }))

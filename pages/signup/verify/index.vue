@@ -118,12 +118,12 @@ onNuxtReady(async () => {
         </div>
         <div v-else>
             <div v-if="loading" class="flex gap-2 flex-col items-center"> 
-                <p class="text-2xl">¡Ya casi lo tenemos, se esta terminando de verificar tu dirección!</p>
+                <p class="text-2xl">{{ $t('verify_verification_ongoing') }}</p>
                 <VueSpinnerBall size="60" color="primary" class="mt-3" />
             </div>
             <div v-else class="flex gap-2 flex-col items-center">
-                <p class="text-3xl">¡Todo listo, ya puedes iniciar sesión!</p>
-                <UButton class="mt-5" size="xl" to="/login" :label="$t('login')" />
+                <p class="text-3xl">{{ $t('verify_verifycation_ok') }}</p>
+                <UButton class="mt-5" size="xl" :to="`/users/${userStore.userData.username}`" :label="$t('verify_verification_btn')" />
             </div>
         </div>
     </div>

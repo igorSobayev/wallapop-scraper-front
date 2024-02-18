@@ -19,7 +19,12 @@ const selectPlan = async (plan) => {
   }
 
   if (!authStore.userLoggedIn) {
-    const planCookie = useCookie('wsPlan')
+
+    const expirationDate = new Date()
+
+    expirationDate.setHours(expirationDate.getHours() + 1)
+
+    const planCookie = useCookie("wsPlan", { expires: expirationDate })
     planCookie.value = plan
 
     router.push('/signup')
