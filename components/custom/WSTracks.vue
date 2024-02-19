@@ -355,7 +355,10 @@ const getTrackToCompare = (track) => {
             trackToCompare = track.historial[0]
         }
 
-        trackToCompare = findCloser(track.historial, getBaseTime.value)
+        if (selectedCompareDate.value !== shared.COMPARE_DATES_OPTIONS.LAST_ELEMENT && selectedCompareDate.value !== shared.COMPARE_DATES_OPTIONS.FIRST_ELEMENT) {
+            trackToCompare = findCloser(track.historial, getBaseTime.value)
+        }
+        
     }
 
     return trackToCompare
@@ -384,10 +387,10 @@ const getBaseTime = computed(() => {
 // Search the closer date to the selected compare date (baseTime)
 const findCloser = (list, baseTime) => {
   return list.reduce((prev, curr) => {
-    const prevDate = Math.abs(new Date(prev.updateDate) - baseTime);
-    const currentDate = Math.abs(new Date(curr.updateDate) - baseTime);
-    return currentDate < prevDate ? curr : prev;
-  });
+    const prevDate = Math.abs(new Date(prev.updateDate) - baseTime)
+    const currentDate = Math.abs(new Date(curr.updateDate) - baseTime)
+    return currentDate < prevDate ? curr : prev
+  })
 }
 
 onNuxtReady(async () => {
