@@ -8,7 +8,7 @@
                 <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8" v-if="authStore.isLoggedIn">
                     <NuxtLink class="hover:text-gray-500" to="/">{{ $t('home') }}</NuxtLink>
                     <NuxtLink class="hover:text-gray-500" :to="`/users/${authStore.user.username}`">{{ $t('products_dashboard') }}</NuxtLink>
-                    <NuxtLink class="hover:text-gray-500" to="/plans">{{ $t('nav_plans') }}</NuxtLink>
+                    <NuxtLink class="hover:text-gray-500" to="/plans" v-if="userStore.userData.plan !== shared.PLANS.PREMIUM">{{ $t('nav_plans') }}</NuxtLink>
                 </ul>
             </div>
             <div class="flex items-center gap-2">
@@ -30,8 +30,10 @@
 import NKProfileNav from './../custom/NKProfileNav.vue'
 import NKLang from '../components/custom/NKLang.vue'
 import { useAuthStore } from './../../store/auth'
+import { useUserStore } from '~/store/user'
 
 const authStore = useAuthStore()
+const userStore = useUserStore()
 
 const menuOpenned = ref(false)
 const onToggleMenu = (e) => {

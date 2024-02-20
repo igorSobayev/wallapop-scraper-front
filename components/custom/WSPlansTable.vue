@@ -5,7 +5,7 @@ import { useAuthStore } from '~/store/auth'
 import { useUserStore } from '~/store/user'
 
 // const props = defineProps({ 
-//     userLoggedIn: Boolean,
+//     isLoggedIn: Boolean,
 // })
 
 const authStore = useAuthStore()
@@ -18,7 +18,7 @@ const selectPlan = async (plan) => {
     return
   }
 
-  if (!authStore.userLoggedIn) {
+  if (!authStore.isLoggedIn) {
 
     const expirationDate = new Date()
 
@@ -44,10 +44,10 @@ onNuxtReady(async () => {
 <template>
   <div class="flex justify-center flex-col gap-2 pt-5 h-full">
     <!-- Plans container -->
-    <div class="flex gap-5 p-5 relative" :class="{ 'justify-center': !authStore.userLoggedIn, 'justify-between': authStore.userLoggedIn }"> 
-      <span class="absolute -inset-6 opacity-20 rounded-3xl blur-2xl" :class="{ 'bg-gradient-center': !authStore.userLoggedIn, 'bg-gradient-br': authStore.userLoggedIn }"></span>
+    <div class="flex gap-5 p-5 relative" :class="{ 'justify-center': authStore.isLoggedIn, 'justify-between': !authStore.isLoggedIn }"> 
+      <span class="absolute -inset-6 opacity-20 rounded-3xl blur-2xl" :class="{ 'bg-gradient-center': authStore.isLoggedIn, 'bg-gradient-br': !authStore.isLoggedIn }"></span>
       <!-- Plan free -->
-      <div class="w-[30%] z-20 h-full" v-if="!authStore.userLoggedIn">
+      <div class="w-[30%] z-20 h-full" v-if="!authStore.isLoggedIn">
         <UCard class="h-full custom-card-height">
           <Placeholder class="h-full grid">
             <h3 class="text-4xl font-bold">
@@ -95,11 +95,14 @@ onNuxtReady(async () => {
                 </div>
               </div>
             </div>
-            <div class="mt-5 self-end">
+            <div class="mt-5 self-end" v-if="userStore.userData.plan !== shared.PLANS.MEDIUM">
               <UButton @click="selectPlan(shared.PLANS.MEDIUM)" class="from-purple-600 to-blue-600 bg-gradient-to-r hover:opacity-90" block>
                 {{ $t('pricing_table_medium_plan_try') }}
               </UButton>
               <span class="text-center block text-xs mt-2 text-slate-500">{{ $t('pricing_table_no_payment_footer') }}</span>
+            </div>
+            <div v-else class="mt-5 self-center text-center text-xl">
+              Este es tu plan actual
             </div>
           </Placeholder>
         </UCard>
@@ -133,11 +136,14 @@ onNuxtReady(async () => {
                 <UIcon name="i-heroicons-check text-green-500 text-2xl" /> <span>{{ $t('pricing_table_premium_adv_three') }}</span>
               </div>
             </div>
-            <div class="mt-5">
+            <div class="mt-5" v-if="userStore.userData.plan !== shared.PLANS.PREMIUM">
               <UButton @click="selectPlan(shared.PLANS.PREMIUM)" class="bg-gradient-to-r from-amber-500 to-pink-500 hover:opacity-90" block>
                 {{ $t('pricing_table_premium_try') }}
               </UButton>
               <span class="text-center block text-xs mt-2 text-slate-500">{{ $t('pricing_table_no_payment_footer') }}</span>
+            </div>
+            <div v-else class="mt-5 self-center text-center text-xl">
+              Este es tu plan actual
             </div>
           </Placeholder>
         </UCard>
