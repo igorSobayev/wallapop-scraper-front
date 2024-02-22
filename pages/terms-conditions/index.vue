@@ -16,7 +16,7 @@ useHead({
 
 <template>
     <div class="flex justify-center">
-        <div class="w-[50%] flex flex-col gap-3">
+        <div class="lg:w-[50%] flex flex-col gap-3">
             <h2 class="text-2xl">{{ $t('tos_title') }}</h2>
             <div>
                 <p>1. {{ $t('tos_introduction') }}</p>
