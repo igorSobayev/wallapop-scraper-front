@@ -1,10 +1,23 @@
 <script setup>
-import { useI18n } from 'vue-i18n'
 import WSHomeHeaderImages from '~/components/custom/WSHomeHeaderImages.vue'
 import WSDemoTrack from '~/components/custom/WSDemoTrack.vue'
 import WSHowItWorks from '~/components/custom/WSHowItWorks.vue'
 import WSWhoShouldUseIt from '~/components/custom/WSWhoShouldUseIt.vue'
 import WSHomePricingTable from '~/components/custom/WSHomePricingTable.vue'
+
+useHead({
+  title: 'WallaTracker',
+  meta: [
+    {
+      name: 'description',
+      content: `Toma el control de tus compras en Wallapop con WallaTracker.
+       Con nuestra herramienta, podrás estar al tanto de las actualizaciones de estado de tus productos favoritos,
+        así como monitorizar cambios de precios en tiempo real. Simplifica tu experiencia de compra y ahorra tiempo en Wallapop.
+        ¡Empieza a disfrutar de una experiencia de compra más inteligente hoy mismo!`
+    },
+  ],
+})
+
 
 const demoActive = ref(false)
 const demoUrl = ref('')
