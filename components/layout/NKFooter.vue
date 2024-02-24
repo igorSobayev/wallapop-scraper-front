@@ -7,8 +7,8 @@ const year = ref(new Date().getFullYear())
 <template>
     <div class="w-full bg-white flex p-8 mt-8 justify-center border-t bg-stone-100">
         <div class="mr-4 max-w-[250px]">
-            <div>Logo</div>
-            <p class="text-sm text-zinc-600">{{ $t('footer_title') }}</p>
+            <div><img class="w-32 lg:-52 cursor-pointer" src="./../../assets/logo.png" alt="WallaTracker Logo"></div>
+            <p class="text-sm text-zinc-600 mt-2">{{ $t('footer_title') }}</p>
             <p class="text-xs text-zinc-400">Copyright © {{ $t(year) }} - All right reserved</p>
         </div>
         <div class="ml-4">
