@@ -13,28 +13,40 @@ const {
   moduleOptions,
 } = useCookieControl()
 
+const { gtag, grantConsent, revokeConsent } = useGtag()
+
 const lang = ref('es')
 
 // example: react to a cookie being accepted
 watch(
   () => cookiesEnabledIds.value,
   (current, previous) => {
-    console.log(current)
     if (
       !previous?.includes('gtag') &&
       current?.includes('gtag')
     ) {
-      // cookie with id `google-analytics` got added
-      window.location.reload() // placeholder for your custom change handler
+      grantConsent() // TODO, grant consent checking the cookie acceptance
+    }
+
+    if (
+      previous?.includes('gtag') &&
+      !current?.includes('gtag')
+    ) {
+      revokeConsent()
     }
   },
   { deep: true },
 )
 
 onNuxtReady(async () => {
-    const userLangSelection = useCookie('i18n_redirected')
-    if (userLangSelection.value) {
-        lang.value = userLangSelection.value
-    }
+  const userLangSelection = useCookie('i18n_redirected')
+  if (userLangSelection.value) {
+    lang.value = userLangSelection.value
+  }
+
+  // Grant consent if the cookie is accepted
+  if (cookiesEnabledIds?.value?.includes('gtag')) {
+    grantConsent()
+  }
 })
 </script>

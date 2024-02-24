@@ -76,8 +76,13 @@ export default defineNuxtConfig({
           }
         ]
       }
-    }]
+    }],
+    'nuxt-gtag',
   ],
+  gtag: {
+    id: process.env.GOOGLE_ANALYTICS,
+    initialConsent: false
+  },
   ui: {
     icons: ['material-symbols', 'icon-park', 'icon-park-outline', 'mingcute', 'emojione-v1']
   },
