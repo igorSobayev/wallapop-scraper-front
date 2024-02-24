@@ -6,6 +6,7 @@
     </div>
     <NKFooter />
     <UNotifications />
+    <WTCookieAdvice />
   </div>
 </template>
 
@@ -13,6 +14,7 @@
 <script setup>
 import NKNavBar from './components/layout/NKNavBar.vue'
 import NKFooter from './components/layout/NKFooter.vue'
+import WTCookieAdvice from './components/custom/WTCookieAdvice.vue'
 </script>
 
 <style>
