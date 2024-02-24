@@ -16,6 +16,7 @@ const year = ref(new Date().getFullYear())
             <div class="flex flex-col text-sm">
                 <NuxtLink class="hover:text-gray-500" to="/terms-conditions">{{ $t('tos_title') }}</NuxtLink>
                 <NuxtLink class="hover:text-gray-500" to="/privacy-policy">{{ $t('privacy_policy_title') }}</NuxtLink>
+                <NuxtLink class="hover:text-gray-500" to="/cookies">{{ $t('cookies_title') }}</NuxtLink>
             </div>
         </div>
     </div>
