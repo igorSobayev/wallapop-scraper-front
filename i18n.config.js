@@ -352,7 +352,7 @@ export default defineI18nConfig(() => ({
         product_state_available: 'Disponible',
         product_state_sold: 'Vendido',
         product_state_reserved: 'Reservado',
-        product_state_removed: 'Eliminad',
+        product_state_removed: 'Eliminado',
         how_it_works: '¿Cómo funciona?',
         how_subtitle: 'Empieza el seguimiento de todos tus productos hoy mismo',
         how_step_one_title: 'Introduce el enlace del producto',
