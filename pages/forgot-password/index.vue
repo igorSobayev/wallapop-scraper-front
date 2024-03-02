@@ -3,6 +3,7 @@ import { ref, useToast, useRouter } from '../../.nuxt/imports'
 import { useAuthStore } from '../../store/auth'
 import NKPasswordInput from '../../components/custom/NKPasswordInput.vue'
 import { useI18n } from 'vue-i18n'
+import { VueSpinnerBall } from 'vue3-spinners'
 
 const toast = useToast()
 const authStore = useAuthStore()
@@ -30,6 +31,8 @@ const newPasswordState = ref({
   repeatedNewPassword: '',
 })
 
+const loading = ref(false)
+
 const resetCodeSend = ref(false)
 
 const validate = (state) => {
@@ -53,16 +56,27 @@ const formResetPass = ref()
 
 async function sendResetCode () {
   await form.value.validate()
+
+  loading.value = true
+
   authStore
     .forgotPassword(state.value.email)
     .then(() => {
+      loading.value = false
       resetCodeSend.value = true
     })
-    .catch((error) => console.log("API error", error))
+    .catch((error) => {
+      resetCodeSend.value = false
+      loading.value = false
+      console.log("API error", error)
+    })
 }
 
 async function resetPassword () {
   await formResetPass.value.validate()
+  
+  loading.value = true
+  
   authStore
     .resetPassword({
       email: newPasswordState.value.email,
@@ -70,6 +84,7 @@ async function resetPassword () {
       resetCode: newPasswordState.value.resetCode,
     })
     .then(() => {
+      loading.value = false
       toast.add({ title: t('passwordRecovered') })
       router.push("/login")
     })
@@ -81,13 +96,18 @@ async function resetPassword () {
 <template>
     <div class="flex justify-center items-center h-[80vh]">
         <div class="bg-white p-5 rounded-md">
+
+            <div class="flex justify-center mb-3" v-if="loading">
+              <VueSpinnerBall size="30" color="primary" class="mt-3" />
+            </div>
+
             <UForm
             ref="form"
             :validate="validate"
             :state="state"
             :validate-on="['submit']"
             @submit="sendResetCode"
-            v-if="!resetCodeSend"
+            v-if="!resetCodeSend && !loading"
             >
               <UFormGroup label="Email" name="email">
                   <UInput type="email" name="email" v-model="state.email" />
@@ -104,7 +124,7 @@ async function resetPassword () {
             :state="newPasswordState"
             :validate-on="['submit']"
             @submit="resetPassword"
-            v-else
+            v-if="resetCodeSend && !loading"
             >
               <UFormGroup class="mt-4" label="Email" name="userEmail">
                   <UInput type="email" name="userEmail" v-model="newPasswordState.email" />
