@@ -8,7 +8,7 @@ const route = useRoute()
 const tracksComp = ref(null)
 
 useHead({
-  title: route.params.username + '  page',
+  title: route.params.username,
   meta: [
     {
       name: 'description',
