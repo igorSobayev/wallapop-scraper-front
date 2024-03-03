@@ -25,7 +25,6 @@ export const useTrackStore = defineStore('track', () => {
 
   // Upload the demo track
   async function uploadDemoTrack (demoUrl: string): Promise<void> {
-    console.log(demoUrl)
     return $fetch(`${baseUrl}/track/upload-demo`, {
       method: 'POST',
       body: {

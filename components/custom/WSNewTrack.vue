@@ -35,11 +35,6 @@ const addNewTracks = async () => {
 
     newTracks.value = filtered
 
-    console.log('THE GOOD ONES')
-    console.log(newTracks.value)
-    console.log('THE BAD ONES')
-    console.log(wrongTracks.value)
-
     tracksInputLoading.value = true
 
     emit('trackUploading')
