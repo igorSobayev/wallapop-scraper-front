@@ -447,7 +447,7 @@ defineExpose({
                 </template>
 
                 <template #title-data="{ row }">
-                    <a class="text-gray-600" target="_blank" :href="row.link"> {{ row.title }} </a>
+                    <a class="text-gray-600" target="_blank" rel="noreferrer" :href="row.link"> {{ row.title }} </a>
                 </template>
 
                 <template #views-data="{ row }">
