@@ -245,6 +245,8 @@ export default defineI18nConfig(() => ({
         cookies_four_text: `We reserve the right to amend this cookie policy at any time, so we recommend that you review it periodically. Changes and clarifications will take effect immediately upon their posting on the website.`,
         cookies_five_title: `Contact`,
         cookies_five_text: `If you have any questions about our cookie policy, you can contact us at TODO.`,
+        footer_contact_title: 'Contact',
+        footer_contact_claim: 'Contact me if you have any suggestions or questions!'
       },
       es: {
         welcome: 'Bienvenido',
@@ -485,6 +487,8 @@ export default defineI18nConfig(() => ({
         cookies_four_text: 'Nos reservamos el derecho de modificar esta política de cookies en cualquier momento, por lo que te recomendamos que la revises periódicamente. Los cambios y aclaraciones surtirán efecto inmediatamente después de su publicación en el sitio web.',
         cookies_five_title: 'Contacto',
         cookies_five_text: 'Si tienes alguna pregunta sobre nuestra política de cookies, puedes contactarnos en TODO',
+        footer_contact_title: 'Contacto',
+        footer_contact_claim: '¿Alguna sugerencia o duda? ¡Contacta conmigo!'
       }
     }
   }))
