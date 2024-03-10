@@ -4,7 +4,6 @@ import { useUserStore } from './../../store/user'
 import { onNuxtReady, ref } from '../../.nuxt/imports'
 import NKPasswordInput from '../../components/custom/NKPasswordInput.vue'
 import { useI18n } from 'vue-i18n'
-import utils from '~/sharedUtils'
 
 const toast = useToast()
 const authStore = useAuthStore()
@@ -32,8 +31,25 @@ const changePasswordState = ref({
     repeatedNewPassword: '',
 })
 
+function formatDate(time, returnYear = false) {
+    const date = new Date(time);
+
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+
+    const hour = ('0' + date.getHours()).slice(-2);
+    const minutes = ('0' + date.getMinutes()).slice(-2);
+
+    if (returnYear) {
+        const year = ('' + date.getFullYear()).slice(-2);
+        return `${hour}:${minutes} ${day}/${month}/${year}`;
+    }
+
+    return `${hour}:${minutes} ${day}/${month}`;
+}
+
 const verificationDate = computed(() => {
-    return utils.formatDate(state.value.verificationDate, true)
+    return formatDate(state.value.verificationDate, true)
 })
 
 const validatePassword = (state) => {
@@ -72,7 +88,6 @@ async function loadUserData () {
 
 onNuxtReady(async () => {
     await loadUserData()
-    toast.add({ title: t('passwordUpdated') })
 })
 </script>
 
