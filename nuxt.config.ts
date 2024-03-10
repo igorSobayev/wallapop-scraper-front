@@ -84,7 +84,7 @@ export default defineNuxtConfig({
     initialConsent: false
   },
   ui: {
-    icons: ['material-symbols', 'icon-park', 'icon-park-outline', 'mingcute', 'emojione-v1']
+    icons: ['material-symbols', 'emojione-v1']
   },
   css: ['~/assets/css/custom.css'],
   colorMode: {
