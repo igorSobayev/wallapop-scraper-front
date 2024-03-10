@@ -2,11 +2,9 @@
 import { useTrackStore } from '../../store/track'
 import { useUserStore } from '~/store/user'
 import { useI18n } from 'vue-i18n'
-import utils from '~/utils'
+import shared from '~/sharedUtils/shared.js'
 
 const { t } = useI18n()
-
-const route = useRoute()
 
 const trackStore = useTrackStore()
 const userStore = useUserStore()
@@ -393,6 +391,24 @@ const findCloser = (list, baseTime) => {
   })
 }
 
+function formatDate(time, returnYear = false) {
+    const date = new Date(time);
+
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+
+    const hour = ('0' + date.getHours()).slice(-2);
+    const minutes = ('0' + date.getMinutes()).slice(-2);
+
+    if (returnYear) {
+        const year = ('' + date.getFullYear()).slice(-2);
+        return `${hour}:${minutes} ${day}/${month}/${year}`;
+    }
+
+    return `${hour}:${minutes} ${day}/${month}`;
+}
+
+
 onNuxtReady(async () => {
     await loadTracksInfo()
 })
@@ -484,7 +500,7 @@ defineExpose({
                 </template>
 
                 <template #updateDate-data="{ row }">
-                    <span class="text-stone-950"> {{ utils.formatDate(row.updateDate) }} </span>
+                    <span class="text-stone-950"> {{ formatDate(row.updateDate) }} </span>
                 </template>
 
                 <template #state-data="{ row }">

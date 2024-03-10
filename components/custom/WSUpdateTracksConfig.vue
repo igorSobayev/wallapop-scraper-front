@@ -1,16 +1,11 @@
 <script setup>
 import { useUserStore } from '~/store/user'
-import { useTrackStore } from '~/store/track'
-import { useAuthStore } from '~/store/auth'
-import shared from '~/utils/shared'
+import shared from '~/sharedUtils/shared.js'
 
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 
-const route = useRoute()
-
-const trackStore = useTrackStore()
 const userStore = useUserStore()
 
 const updateOptions = ref([])

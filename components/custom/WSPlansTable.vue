@@ -1,12 +1,8 @@
 <script setup>
 
-import shared from './../../utils/shared.js'
+import shared from '~/sharedUtils/shared.js'
 import { useAuthStore } from '~/store/auth'
 import { useUserStore } from '~/store/user'
-
-// const props = defineProps({ 
-//     isLoggedIn: Boolean,
-// })
 
 const authStore = useAuthStore()
 const userStore = useUserStore()

@@ -4,7 +4,7 @@ import { useUserStore } from './../../store/user'
 import { onNuxtReady, ref } from '../../.nuxt/imports'
 import NKPasswordInput from '../../components/custom/NKPasswordInput.vue'
 import { useI18n } from 'vue-i18n'
-import utils from '~/utils'
+import utils from '~/sharedUtils'
 
 const toast = useToast()
 const authStore = useAuthStore()

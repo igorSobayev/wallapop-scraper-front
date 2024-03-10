@@ -31,6 +31,7 @@ import NKProfileNav from './../custom/NKProfileNav.vue'
 import NKLang from '../components/custom/NKLang.vue'
 import { useAuthStore } from './../../store/auth'
 import { useUserStore } from '~/store/user'
+import shared from '~/sharedUtils/shared.js'
 
 const authStore = useAuthStore()
 const userStore = useUserStore()
