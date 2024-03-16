@@ -3,7 +3,7 @@
 dist
 .git
 node_modules
-.env
+# .env CUIDADO NO USAR INFORMACIÓN SENSIBLE POR SI HACES PUBLICA LA IMAGEN
 .gitignore
 README.md
 Dockerfile
