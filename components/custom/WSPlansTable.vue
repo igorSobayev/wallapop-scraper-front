@@ -43,7 +43,7 @@ onNuxtReady(async () => {
     <div class="flex flex-col lg:flex-row gap-5 p-5 relative" :class="{ 'justify-center': authStore.isLoggedIn, 'justify-between': !authStore.isLoggedIn }"> 
       <span class="invisible lg:visible absolute -inset-6 opacity-20 rounded-3xl blur-2xl" :class="{ 'bg-gradient-center': authStore.isLoggedIn, 'bg-gradient-br': !authStore.isLoggedIn }"></span>
       <!-- Plan free -->
-      <div class="w-full lg:w-[30%] z-20 h-full" v-if="!authStore.isLoggedIn">
+      <div class="w-full lg:w-[30%] z-20 h-full">
         <UCard class="h-full custom-card-height">
           <Placeholder class="h-full grid">
             <h3 class="text-4xl font-bold">
@@ -54,10 +54,10 @@ onNuxtReady(async () => {
             </div>
             <div class="text-xl mt-3">
               <div class="flex align-center gap-2">
-                <UIcon name="i-heroicons-check text-green-500 text-2xl" /> <span>5 tracks</span>
+                <UIcon name="i-heroicons-check text-green-500 text-2xl" /> <span>50 tracks</span>
               </div>
               <div class="flex align-center gap-2">
-                <UIcon name="i-heroicons-check text-green-500 text-2xl" /> <span>{{ $t('pricing_table_free_plan_adv_one') }}</span>
+                <UIcon name="i-heroicons-check text-green-500 text-2xl" /> <span>Sync manually every 10 minutes</span>
               </div>
             </div>
             <div class="mt-5 self-end">
@@ -70,7 +70,7 @@ onNuxtReady(async () => {
         </UCard>
       </div>
       <!-- Plan medium -->
-      <div class="w-full lg:w-[30%] z-20 h-full">
+      <!-- <div class="w-full lg:w-[30%] z-20 h-full">
         <UCard class="h-full custom-card-height">
           <Placeholder class="h-full grid">
             <div>
@@ -102,9 +102,9 @@ onNuxtReady(async () => {
             </div>
           </Placeholder>
         </UCard>
-      </div>
+      </div> -->
       <!-- Plan premium -->
-      <div class="w-full lg:w-[30%] z-20 relative h-full">
+      <!-- <div class="w-full lg:w-[30%] z-20 relative h-full">
         <span class="absolute w-[100%] flex justify-center top-[-10px] h-[20px] text-sm">
           <span class="text-white px-2 font-bold bg-gradient-to-r from-amber-500 to-pink-500 rounded-md">{{ $t('pricing_table_premium_tag') }}</span>
         </span>
@@ -143,7 +143,7 @@ onNuxtReady(async () => {
             </div>
           </Placeholder>
         </UCard>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

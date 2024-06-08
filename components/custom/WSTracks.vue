@@ -133,10 +133,11 @@ const columns = [
 ]
 
 const maxTracksByPlan = computed(() => {
-    const plan = userStore.userData.plan?.toUpperCase()
-    if (!plan) return 5
+    return 50
+//     const plan = userStore.userData.plan?.toUpperCase()
+//     if (!plan) return 5
 
-   return shared.PLANS_DETAILS[plan].MAX_TRACKS
+//    return shared.PLANS_DETAILS[plan].MAX_TRACKS
 })
 
 const userTracks = computed(() => {
@@ -148,23 +149,25 @@ const haveAdminPerms = computed(() => {
 })
 
 const showBuyPremiumPlanMsg = computed(() => {
-    return !haveAdminPerms.value && userStore.userData.plan !== shared.PLANS.PREMIUM
+    return false
+    // return !haveAdminPerms.value && userStore.userData.plan !== shared.PLANS.PREMIUM
 })
 
 const canRunManualSync = computed(() => {
+    return true
 
-    const now = new Date()
-    const otherDate = new Date(userStore.userData.lastManualUpdate)
+    // const now = new Date()
+    // const otherDate = new Date(userStore.userData.lastManualUpdate)
 
-    const difTime = now.getTime() - otherDate.getTime()
+    // const difTime = now.getTime() - otherDate.getTime()
 
-    const hoursSinceLastRun = difTime / (1000 * 60 * 60)
+    // const hoursSinceLastRun = difTime / (1000 * 60 * 60)
 
-    if (haveAdminPerms.value) {
-        return true
-    }
+    // if (haveAdminPerms.value) {
+    //     return true
+    // }
 
-    return hoursSinceLastRun >= 1 && userStore.userData.plan === shared.PLANS.PREMIUM
+    // return hoursSinceLastRun >= 1 && userStore.userData.plan === shared.PLANS.PREMIUM
 
 })
 
@@ -233,7 +236,7 @@ const updateTracksInfo = async () => {
     } catch (e) {
         updateError.value = true
         if (e.name === 'ManualRunToSoonError') {
-            updateErrorMessage.value = 'Has intentado ejecutar la sincronización manual demasiado pronto, máximo una vez por hora.'
+            updateErrorMessage.value = 'Has intentado ejecutar la sincronización manual demasiado pronto, máximo una vez cada 10 minutos.'
         }
     }
     

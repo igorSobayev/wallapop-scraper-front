@@ -37,10 +37,6 @@ onNuxtReady(async () => {
       <WSNewTrack @track-uploaded="trackUploaded" @track-uploading="trackUploading" />
     </div>
     <hr class="my-4">
-    <div class="my-4">
-      <WSUpdateTracksConfig />
-    </div>
-    <hr class="my-4">
     <!-- Track table -->
     <div class="mt-4">
       <WSTracks ref="tracksComp" />
