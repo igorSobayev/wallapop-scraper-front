@@ -1,6 +1,11 @@
-# Nuxt 3 Minimal Starter
+## Wallapop Scraper
+This is the front repository for the project Wallapop Scraper. You can find the API repository here: https://github.com/igorSobayev/wallapop-scraper
 
-Look at the [nuxt 3 documentation](https://v3.nuxtjs.org) to learn more.
+The dashboard purposo is to track any Wallapop product you want. In the dashboard you can add a list of products and the scraper will check the product update status every day/hour, this update is configurable.
+
+The update is managed with agenda, in the free version is disable the automatic update, only the manual is available.
+
+You can use the dashboard for free: https://wallatracker.com/
 
 ## Setup
 
@@ -12,9 +17,6 @@ yarn install
 
 # npm
 npm install
-
-# pnpm
-pnpm install --shamefully-hoist
 ```
 
 ## Development Server
@@ -40,4 +42,3 @@ npm run preview
 ```
 
 Checkout the [deployment documentation](https://v3.nuxtjs.org/guide/deploy/presets) for more information.
-# wallapop-scraper-front
